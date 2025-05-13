@@ -1,0 +1,16 @@
+{
+    "name": "Playwright TS Container",
+    "image": "mcr.microsoft.com/devcontainers/typescript-node:18",
+    "features": {
+      "ghcr.io/devcontainers/features/playwright:latest": {}
+    },
+    "postCreateCommand": "npx playwright install",
+    "customizations": {
+      "vscode": {
+        "extensions": [
+          "ms-playwright.playwright",
+          "dbaeumer.vscode-eslint"
+        ]
+      }
+    }
+  }
