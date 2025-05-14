@@ -1,12 +1,11 @@
-import { test, expect } from '@playwright/test';
-import { MainPage } from '../pages/mainPage';
-import { AnkietaPage } from '../pages/ankietaPage';
+import { test, expect } from '../pages/basePage';
 
 
 
-test('Weryfikacja tytulu strony Ankieta', async ({ page }) => {
-    const mainPage = new MainPage(page);
-    const ankietaPage = new AnkietaPage(page);
+test('Weryfikacja tytulu strony Ankieta', async ({ 
+  mainPage,
+  ankietaPage
+ }) => {
   
     await mainPage.goto();
     await mainPage.gotoAnkietaPage();
@@ -14,9 +13,10 @@ test('Weryfikacja tytulu strony Ankieta', async ({ page }) => {
     expect(await ankietaPage.isTitleMatches()).toBe(true);
   });
 
-test('Weryfikacja url strony Ankieta', async ({ page }) => {
-    const mainPage = new MainPage(page);
-    const ankietaPage = new AnkietaPage(page);
+test('Weryfikacja url strony Ankieta', async ({ 
+  mainPage,
+  ankietaPage
+ }) => {
   
     await mainPage.goto();
     await mainPage.gotoAnkietaPage();
