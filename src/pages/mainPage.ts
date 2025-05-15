@@ -55,6 +55,17 @@ export class MainPage {
     }
   }
 
+  async isNumberOfProductItemsCorrect(): Promise<boolean> {
+    const productItems = this.page.locator('div.shop-item');
+
+    try {
+      await expect(productItems).toHaveCount(8);
+      return true;
+    } catch {
+      return false;
+    }
+  }
+
 
 
   async gotoAnkietaPage(): Promise<void> {

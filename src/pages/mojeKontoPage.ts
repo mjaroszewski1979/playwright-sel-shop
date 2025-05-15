@@ -24,7 +24,6 @@ export class MojeKontoPage {
 
   async isLoginSuccessfull(): Promise<boolean> {
     await this.login(config.username, config.password);
-    console.log('Dane logowania:', config);
     
     await expect(this.page.locator('body')).toContainText('Witaj Jan Testowy1');
     return true;

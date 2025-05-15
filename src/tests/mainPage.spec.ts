@@ -21,3 +21,10 @@ test('Weryfikacja tekstu elementow menu', async ({
   await mainPage.goto();
   expect(await mainPage.isTextOfMenuItemsCorrect()).toBe(true);
 });
+
+test('Weryfikacja liczby produktow', async ({ 
+  mainPage
+ }) => {
+  await mainPage.goto();
+  expect(await mainPage.isNumberOfProductItemsCorrect()).toBe(true);
+});
