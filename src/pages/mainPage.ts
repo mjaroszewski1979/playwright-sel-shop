@@ -1,4 +1,5 @@
 import { Page, expect } from '@playwright/test';
+import { config } from '../utils/config';
 
 export class MainPage {
   readonly page: Page;
@@ -8,7 +9,7 @@ export class MainPage {
   }
 
   async goto(): Promise<void> {
-    await this.page.goto('http://www.selenium-shop.pl/');
+    await this.page.goto(config.baseUrl);
   }
 
   async isTitleMatches(): Promise<boolean> {

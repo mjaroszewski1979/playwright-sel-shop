@@ -1,4 +1,5 @@
 import { Page, expect } from '@playwright/test';
+import { config } from '../utils/config';
 
 export class MojeKontoPage {
   readonly page: Page;
@@ -22,7 +23,8 @@ export class MojeKontoPage {
   }
 
   async isLoginSuccessfull(): Promise<boolean> {
-    this.login('UserTest1', 'Automatyzacjaselenium1');
+    await this.login(config.username, config.password);
+    console.log('Dane logowania:', config);
     
     await expect(this.page.locator('body')).toContainText('Witaj Jan Testowy1');
     return true;

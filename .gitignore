@@ -1,0 +1,6 @@
+# Pliki środowiskowe
+src\utils\config.ts
+
+# Playwright artifacts
+playwright-report/
+*.trace
