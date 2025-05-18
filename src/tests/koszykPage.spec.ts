@@ -1,0 +1,29 @@
+import { test, expect } from '../pages/basePage';
+import { KoszykPage } from '../pages/koszykPage';
+
+
+
+test('Weryfikacja tytulu strony Koszyk', async ({ 
+  mainPage,
+  koszykPage,
+ }) => {
+  
+    await mainPage.goto();
+    await mainPage.gotoKoszykPage();
+
+    expect(await koszykPage.isTitleMatches()).toBe(true);
+  });
+
+test('Weryfikacja widocznosci linku dodanego produktu w koszyku', async ({ 
+  mainPage,
+  firstProductPage,
+  koszykPage,
+ }) => {
+  
+    await mainPage.goto();
+    await mainPage.clickFirstProductLink();
+    await firstProductPage.clickGoToBasketButton();
+    await mainPage.gotoKoszykPage();
+
+    expect(await koszykPage.isFirstProductLinkDisplayed()).toBe(true);
+  });

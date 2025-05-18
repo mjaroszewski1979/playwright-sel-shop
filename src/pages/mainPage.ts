@@ -87,4 +87,5 @@ export class MainPage {
     const mojeKontoMenu = this.page.locator('li#menu-item-135 a', { hasText: 'Koszyk' });
     await mojeKontoMenu.click();
   }
+
 }
