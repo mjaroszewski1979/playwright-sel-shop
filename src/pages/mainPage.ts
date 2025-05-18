@@ -66,6 +66,11 @@ export class MainPage {
     }
   }
 
+  async clickFirstProductLink(): Promise<void> {
+    const firstProductLink = this.page.locator('a', { hasText: 'Piłka nożna KIPSTA F100' });
+    await firstProductLink.click();
+  }
+
 
 
   async gotoAnkietaPage(): Promise<void> {
@@ -75,6 +80,11 @@ export class MainPage {
 
   async gotoMojeKontoPage(): Promise<void> {
     const mojeKontoMenu = this.page.locator('li#menu-item-136 a', { hasText: 'Moje konto' });
+    await mojeKontoMenu.click();
+  }
+
+  async gotoKoszykPage(): Promise<void> {
+    const mojeKontoMenu = this.page.locator('li#menu-item-135 a', { hasText: 'Koszyk' });
     await mojeKontoMenu.click();
   }
 }
