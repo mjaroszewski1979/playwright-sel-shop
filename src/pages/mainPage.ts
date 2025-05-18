@@ -67,7 +67,7 @@ export class MainPage {
   }
 
   async clickFirstProductLink(): Promise<void> {
-    const firstProductLink = this.page.locator('a', { hasText: 'Piłka nożna KIPSTA F100' });
+    const firstProductLink = this.page.getByRole('link', { name: 'Piłka nożna KIPSTA F100', exact: true });
     await firstProductLink.click();
   }
 
