@@ -3,7 +3,7 @@ import { Page, expect, Locator } from '@playwright/test';
 export class KoszykPage {
     readonly page: Page;
 
-    // Lokatory
+    // Locators
     readonly productLink: Locator;
     readonly quantityInput: Locator;
     readonly removeLink: Locator;
@@ -12,7 +12,7 @@ export class KoszykPage {
     constructor(page: Page) {
         this.page = page;
 
-        // Inicjalizacja lokatorów
+        // Locators initialization
         this.productLink = page.getByRole('link', { name: 'Piłka nożna KIPSTA F100', exact: true });
         this.quantityInput = page.locator('div.quantity input[type="number"]');
         this.removeLink = page.locator('a.remove[aria-label="Usuń produkt"]');

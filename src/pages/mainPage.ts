@@ -1,11 +1,28 @@
-import { Page, expect } from '@playwright/test';
+import { Page, expect, Locator } from '@playwright/test';
 import { config } from '../utils/config';
 
 export class MainPage {
   readonly page: Page;
 
+  // Lokatory
+  readonly menuItems: Locator;
+  readonly menuLinks: Locator;
+  readonly productItems: Locator;
+  readonly firstProductLink: Locator;
+  readonly ankietaMenu: Locator;
+  readonly mojeKontoMenu: Locator;
+  readonly koszykMenu: Locator;
+
   constructor(page: Page) {
     this.page = page;
+
+    this.menuItems = page.locator('ul#menu-menu-1 li.menu-item-type-post_type');
+    this.menuLinks = page.locator('ul#menu-menu-1 li.menu-item > a');
+    this.productItems = page.locator('div.shop-item');
+    this.firstProductLink = page.getByRole('link', { name: 'Piłka nożna KIPSTA F100', exact: true });
+    this.ankietaMenu = page.locator('li#menu-item-134 a', { hasText: 'Ankieta' });
+    this.mojeKontoMenu = page.locator('li#menu-item-136 a', { hasText: 'Moje konto' });
+    this.koszykMenu = page.locator('li#menu-item-135 a', { hasText: 'Koszyk' });
   }
 
   async goto(): Promise<void> {
@@ -23,10 +40,9 @@ export class MainPage {
   }
 
   async isNumberOfMenuItemsCorrect(): Promise<boolean> {
-    const menuItems = this.page.locator('ul#menu-menu-1 li.menu-item-type-post_type');
 
     try {
-      await expect(menuItems).toHaveCount(6);
+      await expect(this.menuItems).toHaveCount(6);
       return true;
     } catch {
       return false;
@@ -34,7 +50,6 @@ export class MainPage {
   }
 
   async isTextOfMenuItemsCorrect(): Promise<boolean> {
-    const menuLinks = this.page.locator('ul#menu-menu-1 li.menu-item > a');
 
     const expectedTexts = [
       'Strona główna',
@@ -47,7 +62,7 @@ export class MainPage {
 
     try {
       for (let i = 0; i < expectedTexts.length; i++) {
-        await expect(menuLinks.nth(i)).toHaveText(expectedTexts[i]);
+        await expect(this.menuLinks.nth(i)).toHaveText(expectedTexts[i]);
       }
       return true;
     } catch {
@@ -56,10 +71,9 @@ export class MainPage {
   }
 
   async isNumberOfProductItemsCorrect(): Promise<boolean> {
-    const productItems = this.page.locator('div.shop-item');
 
     try {
-      await expect(productItems).toHaveCount(8);
+      await expect(this.productItems).toHaveCount(8);
       return true;
     } catch {
       return false;
@@ -67,25 +81,19 @@ export class MainPage {
   }
 
   async clickFirstProductLink(): Promise<void> {
-    const firstProductLink = this.page.getByRole('link', { name: 'Piłka nożna KIPSTA F100', exact: true });
-    await firstProductLink.click();
+    await this.firstProductLink.click();
   }
 
-
-
   async gotoAnkietaPage(): Promise<void> {
-    const ankietaMenu = this.page.locator('li#menu-item-134 a', { hasText: 'Ankieta' });
-    await ankietaMenu.click();
+    await this.ankietaMenu.click();
   }
 
   async gotoMojeKontoPage(): Promise<void> {
-    const mojeKontoMenu = this.page.locator('li#menu-item-136 a', { hasText: 'Moje konto' });
-    await mojeKontoMenu.click();
+    await this.mojeKontoMenu.click();
   }
 
   async gotoKoszykPage(): Promise<void> {
-    const mojeKontoMenu = this.page.locator('li#menu-item-135 a', { hasText: 'Koszyk' });
-    await mojeKontoMenu.click();
+    await this.koszykMenu.click();
   }
 
 }
