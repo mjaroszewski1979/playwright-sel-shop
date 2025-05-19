@@ -37,4 +37,20 @@ export class KoszykPage {
       return false;
     }
   }
+
+  async clickRemoveProductLink(): Promise<void> {
+    const removeProductLink = this.page.locator('a.remove[aria-label="Usuń produkt"]');
+    removeProductLink.click();
+  }
+
+  async isRemovedProductMessageDisplayed(): Promise<boolean> {
+    try {
+      const emptyCartMessage = this.page.locator('p.cart-empty.woocommerce-info');
+      await expect(emptyCartMessage).toBeVisible();
+      await expect(emptyCartMessage).toContainText('Twój koszyk jest pusty.');
+      return true;
+    } catch {
+      return false;
+    }
+  }
 }
