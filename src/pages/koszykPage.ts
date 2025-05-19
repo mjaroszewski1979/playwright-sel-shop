@@ -26,4 +26,15 @@ export class KoszykPage {
       return false;
     }
   }
+
+    async isNumberOfProductsCorrect(): Promise<boolean> {
+    try {
+      const inputElement = this.page.locator('div.quantity input[type="number"]');
+      const value = await inputElement.getAttribute('value'); 
+      expect(value).toBe('2');
+      return true;
+    } catch {
+      return false;
+    }
+  }
 }

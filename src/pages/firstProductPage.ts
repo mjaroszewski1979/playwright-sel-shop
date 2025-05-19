@@ -21,6 +21,18 @@ export class FirstProductPage {
     await goToBasketButton.click();
   }
 
+  async clickViewBasketLink(): Promise<void> {
+    const viewBasketLink = this.page.locator('a', { hasText: 'Zobacz koszyk' });
+    await viewBasketLink.click();
+  }
+
+  async fillNumberOfProducts(): Promise<void> {
+    const quantityInput = this.page.locator('input[name="quantity"]');
+    await expect(quantityInput).toBeVisible();
+    await quantityInput.fill('');        // wyczyść aktualną wartość
+    await quantityInput.type('2');
+  }
+
   async isAddedToBasketMessageDisplayed(): Promise<boolean> {
     try {
       await expect(
