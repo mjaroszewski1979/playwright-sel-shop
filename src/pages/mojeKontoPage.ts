@@ -1,31 +1,41 @@
-import { Page, expect } from '@playwright/test';
+import { Page, expect, Locator } from '@playwright/test';
 import { config } from '../utils/config';
 
 export class MojeKontoPage {
   readonly page: Page;
 
+  // Locators
+  readonly usernameField: Locator;
+  readonly passwordField: Locator;
+  readonly loginButton: Locator;
+  readonly pageBody: Locator;
+
   constructor(page: Page) {
     this.page = page;
+
+    // Locators initialization
+    this.usernameField = page.locator('#username');
+    this.passwordField = page.locator('#password');
+    this.loginButton = page.locator('button[name="login"]');
+    this.pageBody = page.locator('body');
+
   }
 
   async login(username: string, password: string): Promise<void> {
-    const usernameField = this.page.locator('#username');
-    const passwordField = this.page.locator('#password');
-    const loginButton = this.page.locator('button[name="login"]');
 
-    await usernameField.fill(''); // wyczyszczenie
-    await usernameField.type(username);
+    await this.usernameField.fill(''); 
+    await this.usernameField.type(username);
 
-    await passwordField.fill(''); // wyczyszczenie
-    await passwordField.type(password);
+    await this.passwordField.fill(''); 
+    await this.passwordField.type(password);
 
-    await loginButton.click();
+    await this.loginButton.click();
   }
 
   async isLoginSuccessfull(): Promise<boolean> {
     await this.login(config.username, config.password);
     
-    await expect(this.page.locator('body')).toContainText('Witaj Jan Testowy1');
+    await expect(this.pageBody).toContainText('Witaj Jan Testowy1');
     return true;
   }
 }
