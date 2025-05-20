@@ -1,10 +1,22 @@
-import { Page, expect } from '@playwright/test';
+import { Page, expect, Locator } from '@playwright/test';
 
 export class FirstProductPage {
     readonly page: Page;
 
+    // Locators
+    readonly goToBasketButton: Locator;
+    readonly viewBasketLink: Locator;
+    readonly quantityInput: Locator;
+    readonly successMessage: Locator;
+
     constructor(page: Page) {
         this.page = page;
+
+        // Locators initialization
+        this.goToBasketButton = page.locator('button[name="add-to-cart"]', { hasText: 'Dodaj do koszyka' });
+        this.viewBasketLink = page.locator('a', { hasText: 'Zobacz koszyk' });
+        this.quantityInput = page.locator('input[name="quantity"]');
+        this.successMessage = page.locator('div.woocommerce-message', { hasText: 'Piłka nożna KIPSTA F100' })
     }
 
     async isTitleMatches(): Promise<boolean> {
@@ -17,32 +29,26 @@ export class FirstProductPage {
   }
 
   async clickGoToBasketButton(): Promise<void> {
-    const goToBasketButton = this.page.locator('button[name="add-to-cart"]', { hasText: 'Dodaj do koszyka' });
-    await goToBasketButton.click();
+    await this.goToBasketButton.click();
   }
 
   async clickViewBasketLink(): Promise<void> {
-    const viewBasketLink = this.page.locator('a', { hasText: 'Zobacz koszyk' });
-    await viewBasketLink.click();
+    await this.viewBasketLink.click();
   }
 
   async fillNumberOfProducts(): Promise<void> {
-    const quantityInput = this.page.locator('input[name="quantity"]');
-    await expect(quantityInput).toBeVisible();
-    await quantityInput.fill('');        // wyczyść aktualną wartość
-    await quantityInput.type('2');
+    await expect(this.quantityInput).toBeVisible();
+    await this.quantityInput.fill('');        
+    await this.quantityInput.type('2');
   }
 
   async isAddedToBasketMessageDisplayed(): Promise<boolean> {
     try {
-      await expect(
-      this.page.locator('div.woocommerce-message', { hasText: 'Piłka nożna KIPSTA F100' })
-      ).toBeVisible();
+      await expect(this.successMessage).toBeVisible();
       return true;
     } catch {
       return false;
     }
   }
-
 
 }
