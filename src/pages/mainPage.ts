@@ -13,7 +13,9 @@ export class MainPage {
   readonly mojeKontoMenu: Locator;
   readonly koszykMenu: Locator;
   readonly divFirstProduct: Locator;
-  readonly addToCartButton: Locator;
+  readonly divSecondProduct: Locator;
+  readonly addToCartFirstButton: Locator;
+  readonly addToCartSecondButton: Locator;
   readonly viewBasketButton: Locator;
 
   constructor(page: Page) {
@@ -26,8 +28,10 @@ export class MainPage {
     this.ankietaMenu = page.locator('li#menu-item-134 a', { hasText: 'Ankieta' });
     this.mojeKontoMenu = page.locator('li#menu-item-136 a', { hasText: 'Moje konto' });
     this.koszykMenu = page.locator('li#menu-item-135 a', { hasText: 'Koszyk' });
-    this.divFirstProduct = page.locator('div.shop-item').first();
-    this.addToCartButton = page.locator('a[data-product_id="54"]');
+    this.divFirstProduct = page.locator('div.shop-item').nth(0);
+    this.divSecondProduct = page.locator('div.shop-item').nth(1);
+    this.addToCartFirstButton = page.locator('a[data-product_id="54"]');
+    this.addToCartSecondButton = page.locator('a[data-product_id="51"]');
     this.viewBasketButton = page.locator('a[title="Zobacz koszyk"]');
   }
 
@@ -88,7 +92,12 @@ export class MainPage {
 
   async clickFirstProductAddToCartButton(): Promise<void> {
     await this.divFirstProduct.hover();
-    await this.addToCartButton.click();
+    await this.addToCartFirstButton.click();
+  }
+
+  async clickSecondProductAddToCartButton(): Promise<void> {
+    await this.divSecondProduct.hover();
+    await this.addToCartSecondButton.click();
   }
 
   async clickFirstProductViewCartButton(): Promise<void> {
@@ -111,5 +120,12 @@ export class MainPage {
   async gotoKoszykPage(): Promise<void> {
     await this.koszykMenu.click();
   }
+
+  async gotoKoszykPageScroll(): Promise<void> {
+    await this.page.evaluate(() => window.scrollTo(0, 0));
+    await this.koszykMenu.click();
+  }
+
+
 
 }

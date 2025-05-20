@@ -4,7 +4,8 @@ export class KoszykPage {
     readonly page: Page;
 
     // Locators
-    readonly productLink: Locator;
+    readonly productFirstLink: Locator;
+    readonly productSecondLink: Locator;
     readonly quantityInput: Locator;
     readonly removeLink: Locator;
     readonly emptyCartMessage: Locator;
@@ -13,7 +14,8 @@ export class KoszykPage {
         this.page = page;
 
         // Locators initialization
-        this.productLink = page.getByRole('link', { name: 'Piłka nożna KIPSTA F100', exact: true });
+        this.productFirstLink = page.getByRole('link', { name: 'Piłka nożna KIPSTA F100', exact: true });
+        this.productSecondLink = page.getByRole('link', { name: 'Piłka nożna Adidas Replika Liga Mistrzów', exact: true });
         this.quantityInput = page.locator('div.quantity input[type="number"]');
         this.removeLink = page.locator('a.remove[aria-label="Usuń produkt"]');
         this.emptyCartMessage = page.locator('p.cart-empty.woocommerce-info');
@@ -32,7 +34,15 @@ export class KoszykPage {
     
     async isFirstProductLinkDisplayed(): Promise<boolean> {
     try {
-      await expect(this.productLink).toBeVisible();
+      await expect(this.productFirstLink).toBeVisible();
+      return true;
+    } catch {
+      return false;
+    }
+  }
+    async isSecondProductLinkDisplayed(): Promise<boolean> {
+    try {
+      await expect(this.productSecondLink).toBeVisible();
       return true;
     } catch {
       return false;

@@ -69,3 +69,16 @@ test('Weryfikacja poprawnej liczby produktow w koszyku zakupowym', async ({
 
     expect(await koszykPage.isFirstProductLinkDisplayed()).toBe(true);
   });
+
+  test('Weryfikacja dodawania dwóch różnych produktów do koszyka za pomoca przycisku widocznego po hover', async ({ 
+  mainPage,
+  koszykPage,
+ }) => {
+  
+    await mainPage.goto();
+    await mainPage.clickFirstProductAddToCartButton();
+    await mainPage.clickSecondProductAddToCartButton();
+    await mainPage.gotoKoszykPageScroll();
+
+    expect(await koszykPage.isFirstProductLinkDisplayed() && await koszykPage.isSecondProductLinkDisplayed()).toBe(true);
+  });
