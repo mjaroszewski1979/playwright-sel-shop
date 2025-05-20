@@ -12,6 +12,9 @@ export class MainPage {
   readonly ankietaMenu: Locator;
   readonly mojeKontoMenu: Locator;
   readonly koszykMenu: Locator;
+  readonly divFirstProduct: Locator;
+  readonly addToCartButton: Locator;
+  readonly viewBasketButton: Locator;
 
   constructor(page: Page) {
     this.page = page;
@@ -23,6 +26,9 @@ export class MainPage {
     this.ankietaMenu = page.locator('li#menu-item-134 a', { hasText: 'Ankieta' });
     this.mojeKontoMenu = page.locator('li#menu-item-136 a', { hasText: 'Moje konto' });
     this.koszykMenu = page.locator('li#menu-item-135 a', { hasText: 'Koszyk' });
+    this.divFirstProduct = page.locator('div.shop-item').first();
+    this.addToCartButton = page.locator('a[data-product_id="54"]');
+    this.viewBasketButton = page.locator('a[title="Zobacz koszyk"]');
   }
 
   async goto(): Promise<void> {
@@ -78,6 +84,16 @@ export class MainPage {
     } catch {
       return false;
     }
+  }
+
+  async clickFirstProductAddToCartButton(): Promise<void> {
+    await this.divFirstProduct.hover();
+    await this.addToCartButton.click();
+  }
+
+  async clickFirstProductViewCartButton(): Promise<void> {
+    await this.divFirstProduct.hover();
+    await this.viewBasketButton.click();
   }
 
   async clickFirstProductLink(): Promise<void> {

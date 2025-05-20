@@ -57,3 +57,15 @@ test('Weryfikacja poprawnej liczby produktow w koszyku zakupowym', async ({
 
     expect(await koszykPage.isNumberOfProductsCorrect()).toBe(true);
   });
+
+  test('Weryfikacja dodawania produktu do koszyka za pomoca przycisku widocznego po hover', async ({ 
+  mainPage,
+  koszykPage,
+ }) => {
+  
+    await mainPage.goto();
+    await mainPage.clickFirstProductAddToCartButton();
+    await mainPage.clickFirstProductViewCartButton();
+
+    expect(await koszykPage.isFirstProductLinkDisplayed()).toBe(true);
+  });
