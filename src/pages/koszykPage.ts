@@ -9,6 +9,9 @@ export class KoszykPage {
     readonly quantityInput: Locator;
     readonly removeLink: Locator;
     readonly emptyCartMessage: Locator;
+    readonly inputQantityUpdate: Locator;
+    readonly totalPriceAmount: Locator;
+    readonly buttonUpdateBasket: Locator;
 
     constructor(page: Page) {
         this.page = page;
@@ -19,6 +22,9 @@ export class KoszykPage {
         this.quantityInput = page.locator('div.quantity input[type="number"]');
         this.removeLink = page.locator('a.remove[aria-label="Usuń produkt"]');
         this.emptyCartMessage = page.locator('p.cart-empty.woocommerce-info');
+        this.inputQantityUpdate = page.locator('input.qty');
+        this.totalPriceAmount = page.locator('span.woocommerce-Price-amount').nth(1);
+        this.buttonUpdateBasket = page.locator('button[name="update_cart"]', { hasText: 'Zaktualizuj koszyk' })
     }
 
     
@@ -67,6 +73,27 @@ export class KoszykPage {
     try {
       await expect(this.emptyCartMessage).toBeVisible();
       await expect(this.emptyCartMessage).toContainText('Twój koszyk jest pusty.');
+      return true;
+    } catch {
+      return false;
+    }
+  }
+
+  async clickUpdateBasketButton(): Promise<void> {
+    await this.buttonUpdateBasket.click();
+  }
+
+  async updateBasketQuantity(): Promise<void> {
+    await expect(this.inputQantityUpdate).toBeVisible();
+    await this.inputQantityUpdate.fill('');        
+    await this.inputQantityUpdate.type('2');
+    this.clickUpdateBasketButton();
+  }
+
+  async isUpdatedTotalAmountCorrect(): Promise<boolean> {
+    try {
+      await expect(this.totalPriceAmount).toBeVisible();
+      await expect(this.totalPriceAmount).toContainText('4,00');
       return true;
     } catch {
       return false;

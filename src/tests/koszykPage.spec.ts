@@ -82,3 +82,16 @@ test('Weryfikacja poprawnej liczby produktow w koszyku zakupowym', async ({
 
     expect(await koszykPage.isFirstProductLinkDisplayed() && await koszykPage.isSecondProductLinkDisplayed()).toBe(true);
   });
+
+  test('Weryfikacja aktualizacji kwoty całkowitej w koszyku', async ({ 
+  mainPage,
+  koszykPage,
+ }) => {
+  
+    await mainPage.goto();
+    await mainPage.clickFirstProductAddToCartButton();
+    await mainPage.clickFirstProductViewCartButton();
+    await koszykPage.updateBasketQuantity();
+
+    expect(await koszykPage.isUpdatedTotalAmountCorrect()).toBe(true);
+  });
