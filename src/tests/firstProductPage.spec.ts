@@ -24,3 +24,14 @@ test('Weryfikacja widocznosci komunikatu o dodaniu produktu do koszyka', async (
 
     expect(await firstProductPage.isAddedToBasketMessageDisplayed()).toBe(true);
   });
+
+test('Weryfikacja poprawnosci informacji dotyczacych produktu', async ({ 
+  mainPage,
+  firstProductPage
+ }) => {
+  
+    await mainPage.goto();
+    await mainPage.clickFirstProductLink();
+
+    expect(await firstProductPage.isProductSectionDisplayedCorrectly()).toBe(true);
+  });
