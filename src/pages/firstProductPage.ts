@@ -13,6 +13,7 @@ export class FirstProductPage {
     readonly productDetailsDiv: Locator;
     readonly stockAvailablePara: Locator;
     readonly productCategoryDiv: Locator;
+    readonly pilkiCategoryLink: Locator;
 
     constructor(page: Page) {
         this.page = page;
@@ -27,6 +28,7 @@ export class FirstProductPage {
         this.productDetailsDiv = page.locator('div.woocommerce-product-details__short-description');
         this.stockAvailablePara = page.locator('p.stock.available-on-backorder');
         this.productCategoryDiv = page.locator('div.product_meta');
+        this.pilkiCategoryLink = page.locator('a', { hasText: 'Piłki' }).nth(1);
     }
 
     async isTitleMatches(): Promise<boolean> {
@@ -44,6 +46,10 @@ export class FirstProductPage {
 
   async clickViewBasketLink(): Promise<void> {
     await this.viewBasketLink.click();
+  }
+
+  async clickPilkiCategoryLink(): Promise<void> {
+    await this.pilkiCategoryLink.click();
   }
 
   async fillNumberOfProducts(): Promise<void> {
