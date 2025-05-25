@@ -14,6 +14,9 @@ export class FirstProductPage {
     readonly stockAvailablePara: Locator;
     readonly productCategoryDiv: Locator;
     readonly pilkiCategoryLink: Locator;
+    readonly ratingCountSpan: Locator;
+    readonly ratingLink: Locator;
+    readonly ratingCommentDiv: Locator;
 
     constructor(page: Page) {
         this.page = page;
@@ -29,6 +32,9 @@ export class FirstProductPage {
         this.stockAvailablePara = page.locator('p.stock.available-on-backorder');
         this.productCategoryDiv = page.locator('div.product_meta');
         this.pilkiCategoryLink = page.locator('a', { hasText: 'Piłki' }).nth(1);
+        this.ratingCountSpan = page.locator('span.count');
+        this.ratingLink = page.locator('a.woocommerce-review-link');
+        this.ratingCommentDiv = page.locator('div.comment_container');
     }
 
     async isTitleMatches(): Promise<boolean> {
@@ -50,6 +56,10 @@ export class FirstProductPage {
 
   async clickPilkiCategoryLink(): Promise<void> {
     await this.pilkiCategoryLink.click();
+  }
+
+  async clickRatingLink(): Promise<void> {
+    await this.ratingLink.click();
   }
 
   async fillNumberOfProducts(): Promise<void> {
@@ -87,6 +97,18 @@ async isProductSectionDisplayedCorrectly(): Promise<boolean> {
     const categoryCorrect = await this.isElementVisibleWithText(this.productCategoryDiv, 'Kategoria: Piłki');
 
     return titleCorrect && priceCorrect && detailsCorrect && stockCorrect && cartCorrect && categoryCorrect;
+  } catch {
+    return false;
+  }
+}
+
+async isRatingCountMatches(): Promise<boolean> {
+  try {
+    const ratingCount = await this.ratingCountSpan.innerText();
+    const ratingCommentCount = (await this.ratingCommentDiv.count()).toString();
+    expect(ratingCount).toEqual(ratingCommentCount);
+    
+    return true;
   } catch {
     return false;
   }

@@ -35,3 +35,15 @@ test('Weryfikacja poprawnosci informacji dotyczacych produktu', async ({
 
     expect(await firstProductPage.isProductSectionDisplayedCorrectly()).toBe(true);
   });
+
+test('Weryfikacja zgodnosci liczby opinii uzytkownikow', async ({ 
+  mainPage,
+  firstProductPage
+ }) => {
+  
+    await mainPage.goto();
+    await mainPage.clickFirstProductLink();
+    await firstProductPage.clickRatingLink();
+
+    expect(await firstProductPage.isRatingCountMatches()).toBe(true);
+  });
