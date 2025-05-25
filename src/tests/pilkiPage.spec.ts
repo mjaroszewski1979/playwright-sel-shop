@@ -27,3 +27,17 @@ test('Weryfikacja poprawnosci kategoryzowania produktów', async ({
 
     expect(await pilkiPage.isProductDescriptionMatchesCorrectCategory()).toBe(true);
   });
+
+test('Weryfikacja poprawnosci sortowania produktów - cena rosnąco', async ({ 
+  mainPage,
+  firstProductPage,
+  pilkiPage,
+ }) => {
+  
+    await mainPage.goto();
+    await mainPage.clickFirstProductLink();
+    await firstProductPage.clickPilkiCategoryLink();
+    await pilkiPage.selectAscendingOrderOption();
+
+    expect(await pilkiPage.isSortingProductsByPriceWorksCorrectly()).toBe(true);
+  });
