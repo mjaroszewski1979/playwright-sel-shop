@@ -4,18 +4,18 @@ export class ZamowieniaPage {
     readonly page: Page;
 
     // Locators
-    readonly productDescriptionH2: Locator;
-    readonly productsSelectList: Locator;
-    readonly productsDescriptionList: Locator;
+    readonly singleOrderRow: Locator;
+    readonly ordersTableHeaderSpan: Locator;
+
 
 
     constructor(page: Page) {
         this.page = page;
 
         // Locators initialization
-        this.productDescriptionH2 = page.locator('h2.woocommerce-loop-product__title');
-        this.productsSelectList = page.locator('select[name="orderby"]');
-        this.productsDescriptionList = page.locator('li.product.type-product');
+        this.singleOrderRow = page.locator('tr.woocommerce-orders-table__row.woocommerce-orders-table__row--status-on-hold.order');
+        this.ordersTableHeaderSpan = page.locator('span.nobr');
+
 
 
     }
@@ -24,6 +24,35 @@ export class ZamowieniaPage {
     try {
       const currentUrl = this.page.url();
       expect(currentUrl).toBe('http://www.selenium-shop.pl/moje-konto/orders/');
+      return true;
+    } catch {
+      return false;
+    }
+  }
+
+    async isNumberOfOrdersMatches(): Promise<boolean> {
+    try {
+      await expect(this.singleOrderRow).toHaveCount(10);
+      return true;
+    } catch {
+      return false;
+    }
+  }
+
+  async isTextOfTableHeadersCorrect(): Promise<boolean> {
+
+    const expectedTexts = [
+      'Zamówienie',
+      'Data',
+      'Status',
+      'Suma',
+      'Działania'
+    ];
+
+    try {
+      for (let i = 0; i < expectedTexts.length; i++) {
+        await expect(this.ordersTableHeaderSpan.nth(i)).toHaveText(expectedTexts[i]);
+      }
       return true;
     } catch {
       return false;
