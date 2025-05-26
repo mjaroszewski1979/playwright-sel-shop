@@ -20,11 +20,10 @@ export class ZamowieniaPage {
 
     }
 
-    
-
-    async isTitleMatches(): Promise<boolean> {
+    async isUrlMatches(): Promise<boolean> {
     try {
-      await expect(this.page).toHaveTitle('Piłki – Selenium Shop Automatyzacja Testów');
+      const currentUrl = this.page.url();
+      expect(currentUrl).toBe('http://www.selenium-shop.pl/moje-konto/orders/');
       return true;
     } catch {
       return false;

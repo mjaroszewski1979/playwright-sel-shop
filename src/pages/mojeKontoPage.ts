@@ -19,7 +19,7 @@ export class MojeKontoPage {
     this.passwordField = page.locator('#password');
     this.loginButton = page.locator('button[name="login"]');
     this.pageBody = page.locator('body');
-    this.zamowieniaLink = page.locator('a', { hasText: 'Zamówienia' });
+    this.zamowieniaLink = page.locator('a', { hasText: 'Zamówienia' }).first();
 
   }
 
