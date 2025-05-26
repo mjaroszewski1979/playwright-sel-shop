@@ -9,6 +9,7 @@ export class MojeKontoPage {
   readonly passwordField: Locator;
   readonly loginButton: Locator;
   readonly pageBody: Locator;
+  readonly zamowieniaLink: Locator;
 
   constructor(page: Page) {
     this.page = page;
@@ -18,6 +19,7 @@ export class MojeKontoPage {
     this.passwordField = page.locator('#password');
     this.loginButton = page.locator('button[name="login"]');
     this.pageBody = page.locator('body');
+    this.zamowieniaLink = page.locator('a', { hasText: 'Zamówienia' });
 
   }
 
@@ -37,5 +39,9 @@ export class MojeKontoPage {
     
     await expect(this.pageBody).toContainText('Witaj Jan Testowy1');
     return true;
+  }
+
+  async clickZamowieniaLink(): Promise<void> {
+    await this.zamowieniaLink.click();
   }
 }
