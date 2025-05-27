@@ -10,6 +10,7 @@ export class MojeKontoPage {
   readonly loginButton: Locator;
   readonly pageBody: Locator;
   readonly zamowieniaLink: Locator;
+  readonly szczegolyKontaLink: Locator;
 
   constructor(page: Page) {
     this.page = page;
@@ -20,6 +21,7 @@ export class MojeKontoPage {
     this.loginButton = page.locator('button[name="login"]');
     this.pageBody = page.locator('body');
     this.zamowieniaLink = page.locator('a', { hasText: 'Zamówienia' }).first();
+    this.szczegolyKontaLink = page.locator('a', { hasText: 'Szczegóły konta' }).nth(0);
 
   }
 
@@ -43,5 +45,9 @@ export class MojeKontoPage {
 
   async clickZamowieniaLink(): Promise<void> {
     await this.zamowieniaLink.click();
+  }
+
+  async clickSzczegolyKontaLink(): Promise<void> {
+    await this.szczegolyKontaLink.click();
   }
 }
