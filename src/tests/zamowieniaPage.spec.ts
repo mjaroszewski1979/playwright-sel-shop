@@ -44,3 +44,17 @@ test('Weryfikacja struktury tabeli zamowien', async ({
 
     expect(await zamowieniaPage.isTextOfTableHeadersCorrect()).toBe(true);
   });
+
+test('Weryfikacja szczegolow zamowienia', async ({ 
+  mainPage,
+  mojeKontoPage,
+  zamowieniaPage,
+ }) => {
+  
+    await mainPage.goto();
+    await mainPage.gotoMojeKontoPage();
+    await mojeKontoPage.login(config.username, config.password);
+    await mojeKontoPage.clickZamowieniaLink();
+
+    expect(await zamowieniaPage.verifyOrderDetails()).toBe(true);
+  });

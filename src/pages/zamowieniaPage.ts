@@ -6,6 +6,10 @@ export class ZamowieniaPage {
     // Locators
     readonly singleOrderRow: Locator;
     readonly ordersTableHeaderSpan: Locator;
+    readonly orderNumberLink: Locator;
+    readonly orderTime: Locator;
+    readonly orderNumberMark: Locator;
+    readonly orderDateMark: Locator;
 
 
 
@@ -15,6 +19,10 @@ export class ZamowieniaPage {
         // Locators initialization
         this.singleOrderRow = page.locator('tr.woocommerce-orders-table__row.woocommerce-orders-table__row--status-on-hold.order');
         this.ordersTableHeaderSpan = page.locator('span.nobr');
+        this.orderNumberLink = page.locator('td[data-title="Zamówienie"] > a').first();
+        this.orderTime = page.locator('td[data-title="Data"] time').first();
+        this.orderNumberMark = page.locator('p > mark.order-number');
+        this.orderDateMark = page.locator('p > mark.order-date');
 
 
 
@@ -57,6 +65,39 @@ export class ZamowieniaPage {
     } catch {
       return false;
     }
+  }
+
+
+  async getOrderNumber(): Promise<string> {
+    const rawOrderNumber = await this.orderNumberLink.textContent();
+    if (!rawOrderNumber) {
+      throw new Error('Nie znaleziono numeru zamówienia.');
+    }
+    const orderNumber = rawOrderNumber.replace('#', '').trim();
+    return orderNumber;
+  }
+
+  async getOrderTime(): Promise<string> {
+    const orderDate = await this.orderTime.textContent();
+    if (!orderDate) {
+      throw new Error('Nie znaleziono daty zamówienia.');
+    }
+    return orderDate;
+  }
+
+  async verifyOrderDetails(): Promise<boolean> {
+    try {
+      const orderNumber = await this.getOrderNumber()
+      const orderDate = await this.getOrderTime()
+      await this.orderNumberLink.click();
+      await expect(this.orderNumberMark).toHaveText(orderNumber);
+      await expect(this.orderDateMark).toHaveText(orderDate);
+
+      return true;
+    } catch (error) {
+    console.error('Błąd walidacji danych zamówienia:', error);
+    return false;
+  }
   }
 
 }
