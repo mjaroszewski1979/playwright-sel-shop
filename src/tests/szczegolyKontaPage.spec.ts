@@ -16,3 +16,17 @@ test('Weryfikacja url strony Szczegoly Konta', async ({
 
     expect(await szczegolyKontaPage.isUrlMatches()).toBe(true);
   });
+
+test('Weryfikacja wartosci widocznych w polach input strony Szczegoly Konta', async ({ 
+  mainPage,
+  mojeKontoPage,
+  szczegolyKontaPage,
+ }) => {
+  
+    await mainPage.goto();
+    await mainPage.gotoMojeKontoPage();
+    await mojeKontoPage.login(config.username, config.password);
+    await mojeKontoPage.clickSzczegolyKontaLink();
+
+    expect(await szczegolyKontaPage.isAccountDetailSectionDisplayedCorrectly()).toBe(true);
+  });
