@@ -16,3 +16,17 @@ test('Weryfikacja url strony Adresy', async ({
 
     expect(await adresyPage.isUrlMatches()).toBe(true);
   });
+
+test('Weryfikacja poprawnosci sekcji Edytuj Adres', async ({ 
+  mainPage,
+  mojeKontoPage,
+  adresyPage,
+ }) => {
+  
+    await mainPage.goto();
+    await mainPage.gotoMojeKontoPage();
+    await mojeKontoPage.login(config.username, config.password);
+    await mojeKontoPage.clickElement(mojeKontoPage.adresyLink);
+
+    expect(await adresyPage.isEditAddressSectionDisplayedCorrectly()).toBe(true);
+  });
