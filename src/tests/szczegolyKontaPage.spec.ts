@@ -12,7 +12,7 @@ test('Weryfikacja url strony Szczegoly Konta', async ({
     await mainPage.goto();
     await mainPage.gotoMojeKontoPage();
     await mojeKontoPage.login(config.username, config.password);
-    await mojeKontoPage.clickSzczegolyKontaLink();
+    await mojeKontoPage.clickElement(mojeKontoPage.szczegolyKontaLink);
 
     expect(await szczegolyKontaPage.isUrlMatches()).toBe(true);
   });
@@ -26,7 +26,7 @@ test('Weryfikacja wartosci widocznych w polach input strony Szczegoly Konta', as
     await mainPage.goto();
     await mainPage.gotoMojeKontoPage();
     await mojeKontoPage.login(config.username, config.password);
-    await mojeKontoPage.clickSzczegolyKontaLink();
+    await mojeKontoPage.clickElement(mojeKontoPage.szczegolyKontaLink);
 
     expect(await szczegolyKontaPage.isAccountDetailSectionDisplayedCorrectly()).toBe(true);
   });

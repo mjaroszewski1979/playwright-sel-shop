@@ -13,6 +13,7 @@ export class MojeKontoPage {
   readonly szczegolyKontaLink: Locator;
   readonly logoutLink: Locator;
   readonly incorrectLoginAlert: Locator;
+  readonly adresyLink: Locator;
 
   constructor(page: Page) {
     this.page = page;
@@ -26,6 +27,7 @@ export class MojeKontoPage {
     this.szczegolyKontaLink = page.locator('a', { hasText: 'Szczegóły konta' }).nth(0);
     this.logoutLink = page.locator('a', { hasText: 'Wyloguj' }).nth(0);
     this.incorrectLoginAlert = page.locator('ul.woocommerce-error');
+    this.adresyLink = page.locator('a', { hasText: 'Adresy' }).first();
 
   }
 
@@ -60,21 +62,15 @@ export class MojeKontoPage {
     }
   }
 
-  async clickZamowieniaLink(): Promise<void> {
-    await this.zamowieniaLink.click();
+  async clickElement(locatorName: Locator): Promise<void> {
+    await locatorName.click();
   }
 
-  async clickSzczegolyKontaLink(): Promise<void> {
-    await this.szczegolyKontaLink.click();
-  }
-  async clickLogoutLink(): Promise<void> {
-    await this.logoutLink.click();
-  }
 
   async isLogoutSuccessfull(): Promise<boolean> {
     try {
       await this.login(config.username, config.password);
-      await this.clickLogoutLink();
+      await this.clickElement(this.logoutLink);
       await expect(this.loginButton).toBeVisible();
       return true;
     } catch {
