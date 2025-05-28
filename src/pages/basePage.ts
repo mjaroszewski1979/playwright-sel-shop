@@ -7,6 +7,7 @@ import { KoszykPage } from './koszykPage';
 import { PilkiPage } from './pilkiPage';
 import { ZamowieniaPage } from './zamowieniaPage';
 import { SzczegolyKontaPage } from './szczegolyKontaPage';
+import { AdresyPage } from './adresyPage';
 
 type MyFixtures = {
     mainPage: MainPage,
@@ -17,6 +18,7 @@ type MyFixtures = {
     pilkiPage: PilkiPage,
     zamowieniaPage: ZamowieniaPage,
     szczegolyKontaPage: SzczegolyKontaPage,
+    adresyPage: AdresyPage,
 }
 
 export const test = base.extend<MyFixtures>({
@@ -43,6 +45,9 @@ export const test = base.extend<MyFixtures>({
     },
     szczegolyKontaPage: async ({ page }, use) => {
         await use(new SzczegolyKontaPage(page))
+    },
+    adresyPage: async ({ page }, use) => {
+        await use(new AdresyPage(page))
     },
 
 })

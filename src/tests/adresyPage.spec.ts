@@ -1,0 +1,18 @@
+import { test, expect } from '../pages/basePage';
+import { config } from '../utils/config';
+
+
+
+test('Weryfikacja url strony Adresy', async ({ 
+  mainPage,
+  mojeKontoPage,
+  adresyPage,
+ }) => {
+  
+    await mainPage.goto();
+    await mainPage.gotoMojeKontoPage();
+    await mojeKontoPage.login(config.username, config.password);
+    await mojeKontoPage.clickElement(mojeKontoPage.adresyLink);
+
+    expect(await adresyPage.isUrlMatches()).toBe(true);
+  });
