@@ -11,6 +11,7 @@ export class MojeKontoPage {
   readonly pageBody: Locator;
   readonly zamowieniaLink: Locator;
   readonly szczegolyKontaLink: Locator;
+  readonly logoutLink: Locator;
 
   constructor(page: Page) {
     this.page = page;
@@ -22,6 +23,7 @@ export class MojeKontoPage {
     this.pageBody = page.locator('body');
     this.zamowieniaLink = page.locator('a', { hasText: 'Zamówienia' }).first();
     this.szczegolyKontaLink = page.locator('a', { hasText: 'Szczegóły konta' }).nth(0);
+    this.logoutLink = page.locator('a', { hasText: 'Wyloguj' }).nth(0);
 
   }
 
@@ -37,10 +39,13 @@ export class MojeKontoPage {
   }
 
   async isLoginSuccessfull(): Promise<boolean> {
-    await this.login(config.username, config.password);
-    
-    await expect(this.pageBody).toContainText('Witaj Jan Testowy1');
-    return true;
+    try {
+      await this.login(config.username, config.password);
+      await expect(this.pageBody).toContainText('Witaj Jan Testowy1');
+      return true;
+    } catch {
+      return false;
+    }
   }
 
   async clickZamowieniaLink(): Promise<void> {
@@ -50,4 +55,19 @@ export class MojeKontoPage {
   async clickSzczegolyKontaLink(): Promise<void> {
     await this.szczegolyKontaLink.click();
   }
+  async clickLogoutLink(): Promise<void> {
+    await this.logoutLink.click();
+  }
+
+  async isLogoutSuccessfull(): Promise<boolean> {
+    try {
+      await this.login(config.username, config.password);
+      await this.clickLogoutLink();
+      await expect(this.loginButton).toBeVisible();
+      return true;
+    } catch {
+      return false;
+    }
+  }
+
 }
