@@ -12,6 +12,7 @@ export class MojeKontoPage {
   readonly zamowieniaLink: Locator;
   readonly szczegolyKontaLink: Locator;
   readonly logoutLink: Locator;
+  readonly incorrectLoginAlert: Locator;
 
   constructor(page: Page) {
     this.page = page;
@@ -24,6 +25,7 @@ export class MojeKontoPage {
     this.zamowieniaLink = page.locator('a', { hasText: 'Zamówienia' }).first();
     this.szczegolyKontaLink = page.locator('a', { hasText: 'Szczegóły konta' }).nth(0);
     this.logoutLink = page.locator('a', { hasText: 'Wyloguj' }).nth(0);
+    this.incorrectLoginAlert = page.locator('ul.woocommerce-error');
 
   }
 
@@ -42,6 +44,16 @@ export class MojeKontoPage {
     try {
       await this.login(config.username, config.password);
       await expect(this.pageBody).toContainText('Witaj Jan Testowy1');
+      return true;
+    } catch {
+      return false;
+    }
+  }
+
+  async isIncorrectLoginResolvedProperly(): Promise<boolean> {
+    try {
+      await this.login('wronguser', 'wrongpass');
+      await expect(this.incorrectLoginAlert).toContainText('Nieznana użytkownik. Proszę sprawdzić ponownie lub spróbować swój email.');
       return true;
     } catch {
       return false;
