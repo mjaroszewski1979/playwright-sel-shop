@@ -3,7 +3,7 @@ import { config } from '../utils/config';
 
 
 
-test('Weryfikacja url strony Adresy', async ({ 
+test('Weryfikacja url strony Pliki Do Pobrania', async ({ 
   mainPage,
   mojeKontoPage,
   plikiDoPobraniaPage,
@@ -15,4 +15,18 @@ test('Weryfikacja url strony Adresy', async ({
     await mojeKontoPage.clickElement(mojeKontoPage.plikiDoPobraniaLink);
 
     expect(await plikiDoPobraniaPage.isUrlMatches()).toBe(true);
+  });
+  
+test('Weryfikacja widocznosci i tekstu wyswietlonego komunikatu', async ({ 
+  mainPage,
+  mojeKontoPage,
+  plikiDoPobraniaPage,
+ }) => {
+  
+    await mainPage.goto();
+    await mainPage.gotoMojeKontoPage();
+    await mojeKontoPage.login(config.username, config.password);
+    await mojeKontoPage.clickElement(mojeKontoPage.plikiDoPobraniaLink);
+
+    expect(await plikiDoPobraniaPage.isInfoMessageDisplayedCorrectly()).toBe(true);
   });
