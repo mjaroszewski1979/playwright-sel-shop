@@ -14,6 +14,7 @@ export class MojeKontoPage {
   readonly logoutLink: Locator;
   readonly incorrectLoginAlert: Locator;
   readonly adresyLink: Locator;
+  readonly plikiDoPobraniaLink: Locator;
 
   constructor(page: Page) {
     this.page = page;
@@ -28,6 +29,7 @@ export class MojeKontoPage {
     this.logoutLink = page.locator('a', { hasText: 'Wyloguj' }).nth(0);
     this.incorrectLoginAlert = page.locator('ul.woocommerce-error');
     this.adresyLink = page.locator('a', { hasText: 'Adresy' }).first();
+    this.plikiDoPobraniaLink = page.locator('a', { hasText: 'Pliki do pobrania' }).first();
 
   }
 

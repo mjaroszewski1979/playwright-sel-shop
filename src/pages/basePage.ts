@@ -8,6 +8,7 @@ import { PilkiPage } from './pilkiPage';
 import { ZamowieniaPage } from './zamowieniaPage';
 import { SzczegolyKontaPage } from './szczegolyKontaPage';
 import { AdresyPage } from './adresyPage';
+import { PlikiDoPobraniaPage } from './plikiDoPobraniaPage';
 
 type MyFixtures = {
     mainPage: MainPage,
@@ -19,6 +20,7 @@ type MyFixtures = {
     zamowieniaPage: ZamowieniaPage,
     szczegolyKontaPage: SzczegolyKontaPage,
     adresyPage: AdresyPage,
+    plikiDoPobraniaPage: PlikiDoPobraniaPage,
 }
 
 export const test = base.extend<MyFixtures>({
@@ -48,6 +50,9 @@ export const test = base.extend<MyFixtures>({
     },
     adresyPage: async ({ page }, use) => {
         await use(new AdresyPage(page))
+    },
+    plikiDoPobraniaPage: async ({ page }, use) => {
+        await use(new PlikiDoPobraniaPage(page))
     },
 
 })
