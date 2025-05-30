@@ -1,4 +1,5 @@
 import { Page, expect, Locator } from '@playwright/test';
+import { isUrlMatches } from '../utils/urlUtils';
 
 export class KoszykPage {
     readonly page: Page;
@@ -37,6 +38,11 @@ export class KoszykPage {
       return false;
     }
   }
+
+   async verifyUserIsOnKoszykPage(): Promise<boolean> {
+        
+          return await isUrlMatches(this.page, 'http://www.selenium-shop.pl/koszyk/');
+          }
     
     async isFirstProductLinkDisplayed(): Promise<boolean> {
     try {

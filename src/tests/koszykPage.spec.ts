@@ -13,6 +13,17 @@ test('Weryfikacja tytulu strony Koszyk', async ({
     expect(await koszykPage.isTitleMatches()).toBe(true);
   });
 
+test('Weryfikacja url strony Koszyk', async ({ 
+  mainPage,
+  koszykPage
+ }) => {
+  
+    await mainPage.goto();
+    await mainPage.gotoKoszykPage();
+  
+    expect(await koszykPage.verifyUserIsOnKoszykPage()).toBe(true);
+  });
+
 test('Weryfikacja widocznosci linku dodanego produktu w koszyku', async ({ 
   mainPage,
   firstProductPage,
