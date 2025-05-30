@@ -21,5 +21,5 @@ test('Weryfikacja url strony Ankieta', async ({
     await mainPage.goto();
     await mainPage.gotoAnkietaPage();
   
-    expect(await ankietaPage.isUrlMatches()).toBe(true);
+    expect(await ankietaPage.verifyUserIsOnAnkietaPage()).toBe(true);
   });

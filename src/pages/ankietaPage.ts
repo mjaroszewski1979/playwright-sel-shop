@@ -1,4 +1,5 @@
 import { Page, expect } from '@playwright/test';
+import { isUrlMatches } from '../utils/urlUtils';
 
 export class AnkietaPage {
   readonly page: Page;
@@ -18,17 +19,10 @@ export class AnkietaPage {
     }
   }
 
-  async isUrlMatches(): Promise<boolean> {
-    const expectedUrl = 'http://www.selenium-shop.pl/o-nas/';
-    try {
-      const currentUrl = this.page.url(); // <- wywołanie metody
-      expect(currentUrl).toBe(expectedUrl);
-      return true;
-    } catch (error) {
-      console.log('Błąd porównania URL:', error);
-      return false;
-    }
-  }
+  async verifyUserIsOnAnkietaPage(): Promise<boolean> {
+      
+        return await isUrlMatches(this.page, 'http://www.selenium-shop.pl/o-nas/');
+        }
   
 
 }
