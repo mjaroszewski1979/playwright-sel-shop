@@ -1,5 +1,16 @@
 import { test, expect } from '../pages/basePage';
 
+test('Weryfikacja url strony Moje Konto', async ({ 
+  mainPage,
+  mojeKontoPage
+ }) => {
+  
+    await mainPage.goto();
+    await mainPage.gotoMojeKontoPage();
+  
+    expect(await mojeKontoPage.verifyUserIsOnMojeKontoPage()).toBe(true);
+  });
+
 test('Weryfikacja procesu logowania z poprwana nazwa uzytkownika i haslem', async ({ 
   mainPage,
   mojeKontoPage

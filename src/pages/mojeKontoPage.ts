@@ -1,5 +1,6 @@
 import { Page, expect, Locator } from '@playwright/test';
 import { config } from '../utils/config';
+import { isUrlMatches } from '../utils/urlUtils';
 
 export class MojeKontoPage {
   readonly page: Page;
@@ -32,6 +33,11 @@ export class MojeKontoPage {
     this.plikiDoPobraniaLink = page.locator('a', { hasText: 'Pliki do pobrania' }).first();
 
   }
+
+   async verifyUserIsOnMojeKontoPage(): Promise<boolean> {
+        
+          return await isUrlMatches(this.page, 'http://www.selenium-shop.pl/moje-konto/');
+          }
 
   async login(username: string, password: string): Promise<void> {
 
