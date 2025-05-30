@@ -21,10 +21,6 @@ export async function isElementVisibleWithPartialText(locator: Locator, expected
   }
 }
 
-export function generateRandomStreet(): string {
-    const randomNumber = Math.floor(1000 + Math.random() * 9000); 
-    return `Nowa ${randomNumber}`;
-    }
 
 export async function isElementVisibleWithCorrectValue(locatorName: Locator, expectedValue: string): Promise<boolean> {
   try {

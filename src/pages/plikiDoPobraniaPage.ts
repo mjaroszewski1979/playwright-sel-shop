@@ -1,4 +1,4 @@
-import { Page, expect, Locator } from '@playwright/test';
+import { Page, Locator } from '@playwright/test';
 import { isElementVisibleWithPartialText } from '../utils/assertions';
 import { isUrlMatches } from '../utils/urlUtils';
 
