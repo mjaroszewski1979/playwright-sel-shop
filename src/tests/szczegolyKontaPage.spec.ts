@@ -1,5 +1,6 @@
 import { test, expect } from '../pages/basePage';
 import { config } from '../utils/config';
+import { clickElement } from '../utils/actions';
 
 
 
@@ -12,7 +13,7 @@ test('Weryfikacja url strony Szczegoly Konta', async ({
     await mainPage.goto();
     await mainPage.gotoMojeKontoPage();
     await mojeKontoPage.login(config.username, config.password);
-    await mojeKontoPage.clickElement(mojeKontoPage.szczegolyKontaLink);
+    await clickElement(mojeKontoPage.szczegolyKontaLink);
 
     expect(await szczegolyKontaPage.verifyUserIsOnSzczegolyKontaPage()).toBe(true);
   });
@@ -26,7 +27,7 @@ test('Weryfikacja wartosci widocznych w polach input strony Szczegoly Konta', as
     await mainPage.goto();
     await mainPage.gotoMojeKontoPage();
     await mojeKontoPage.login(config.username, config.password);
-    await mojeKontoPage.clickElement(mojeKontoPage.szczegolyKontaLink);
+    await clickElement(mojeKontoPage.szczegolyKontaLink);
 
     expect(await szczegolyKontaPage.isAccountDetailSectionDisplayedCorrectly()).toBe(true);
   });
