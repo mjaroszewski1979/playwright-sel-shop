@@ -1,4 +1,6 @@
 import { Page, expect, Locator } from '@playwright/test';
+import { isElementVisibleWithText, isElementVisibleWithPartialText, generateRandomStreet } from '../utils/assertions';
+import { isUrlMatches } from '../utils/urlUtils';
 
 export class AdresyPage {
     readonly page: Page;
@@ -27,42 +29,16 @@ export class AdresyPage {
         this.addressFirstSection = page.locator('div.u-column1 > address').nth(0);
     }
 
-    
-
-    async isUrlMatches(): Promise<boolean> {
-        try {
-        const currentUrl = this.page.url();
-        expect(currentUrl).toBe('http://www.selenium-shop.pl/moje-konto/edit-address/');
-        return true;
-        } catch {
-        return false;
-        }
+    async verifyUserIsOnAdresyPage(): Promise<boolean> {
+      
+        return await isUrlMatches(this.page, 'http://www.selenium-shop.pl/moje-konto/edit-address/');
         }
 
-    async isElementVisibleWithText(locatorName: Locator, expectedText: string): Promise<boolean> {
-        try {
-            await expect(locatorName).toBeVisible();
-            await expect(locatorName).toHaveText(expectedText);
-            return true;
-        } catch {
-            return false;
-        }
-        }
-
-    async isElementVisibleWithPartialText(locatorName: Locator, expectedText: string): Promise<boolean> {
-        try {
-            await expect(locatorName).toBeVisible();
-            await expect(locatorName).toContainText(expectedText);
-            return true;
-        } catch {
-            return false;
-        }
-        }
 
     async isEditAddressSectionDisplayedCorrectly(): Promise<boolean> {
         try {
-            const adresRozliczeniowyCorrect = await this.isElementVisibleWithText(this.adresRozliczeniowyHeader, 'Adres rozliczeniowy');
-            const adresDoWysylkiCorrect = await this.isElementVisibleWithText(this.adresDoWysylkiHeader, 'Adres do wysyłki');
+            const adresRozliczeniowyCorrect = await isElementVisibleWithText(this.adresRozliczeniowyHeader, 'Adres rozliczeniowy');
+            const adresDoWysylkiCorrect = await isElementVisibleWithText(this.adresDoWysylkiHeader, 'Adres do wysyłki');
 
             return adresRozliczeniowyCorrect && adresDoWysylkiCorrect
         } catch {
@@ -70,20 +46,16 @@ export class AdresyPage {
         }
         }
 
-    generateRandomStreet(): string {
-        const randomNumber = Math.floor(1000 + Math.random() * 9000); 
-        return `Nowa ${randomNumber}`;
-        }
 
     async isEditingBillingAddressWorksCorrectly(): Promise<boolean> {
         try {
             await this.adresRozliczeniowyEdycjaLink.click();
-            const randomStreetName = this.generateRandomStreet();
+            const randomStreetName = generateRandomStreet();
             await this.streetInput.fill('');
             await this.streetInput.type(randomStreetName);
             await this.saveButton.click();
-            const successMessageCorrect = await this.isElementVisibleWithText(this.successMessageDiv, 'Adres został zmieniony.');
-            const addressStreetCorrect = await this.isElementVisibleWithPartialText(this.addressFirstSection, randomStreetName);
+            const successMessageCorrect = await isElementVisibleWithText(this.successMessageDiv, 'Adres został zmieniony.');
+            const addressStreetCorrect = await isElementVisibleWithPartialText(this.addressFirstSection, randomStreetName);
 
             return successMessageCorrect && addressStreetCorrect;
         } catch {

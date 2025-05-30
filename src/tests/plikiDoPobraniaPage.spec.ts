@@ -14,7 +14,7 @@ test('Weryfikacja url strony Pliki Do Pobrania', async ({
     await mojeKontoPage.login(config.username, config.password);
     await mojeKontoPage.clickElement(mojeKontoPage.plikiDoPobraniaLink);
 
-    expect(await plikiDoPobraniaPage.isUrlMatches()).toBe(true);
+    expect(await plikiDoPobraniaPage.verifyUserIsOnPlikiDoPobraniaPage()).toBe(true);
   });
   
 test('Weryfikacja widocznosci i tekstu wyswietlonego komunikatu', async ({ 

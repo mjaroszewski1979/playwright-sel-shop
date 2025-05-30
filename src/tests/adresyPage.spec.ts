@@ -14,7 +14,7 @@ test('Weryfikacja url strony Adresy', async ({
     await mojeKontoPage.login(config.username, config.password);
     await mojeKontoPage.clickElement(mojeKontoPage.adresyLink);
 
-    expect(await adresyPage.isUrlMatches()).toBe(true);
+    expect(await adresyPage.verifyUserIsOnAdresyPage()).toBe(true);
   });
 
 test('Weryfikacja poprawnosci sekcji Edytuj Adres', async ({ 

@@ -14,7 +14,7 @@ test('Weryfikacja url strony Zamowienia', async ({
     await mojeKontoPage.login(config.username, config.password);
     await mojeKontoPage.clickElement(mojeKontoPage.zamowieniaLink);
 
-    expect(await zamowieniaPage.isUrlMatches()).toBe(true);
+    expect(await zamowieniaPage.verifyUserIsOnZamowieniaPage()).toBe(true);
   });
 
 test('Weryfikacja ilosci zamowien na pojedynczej stronie', async ({ 

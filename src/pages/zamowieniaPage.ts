@@ -1,4 +1,5 @@
 import { Page, expect, Locator } from '@playwright/test';
+import { isUrlMatches } from '../utils/urlUtils';
 
 export class ZamowieniaPage {
     readonly page: Page;
@@ -24,19 +25,13 @@ export class ZamowieniaPage {
         this.orderNumberMark = page.locator('p > mark.order-number');
         this.orderDateMark = page.locator('p > mark.order-date');
 
-
-
     }
 
-    async isUrlMatches(): Promise<boolean> {
-    try {
-      const currentUrl = this.page.url();
-      expect(currentUrl).toBe('http://www.selenium-shop.pl/moje-konto/orders/');
-      return true;
-    } catch {
-      return false;
+    async verifyUserIsOnZamowieniaPage(): Promise<boolean> {
+      
+    return await isUrlMatches(this.page, 'http://www.selenium-shop.pl/moje-konto/orders/');
     }
-  }
+
 
     async isNumberOfOrdersMatches(): Promise<boolean> {
     try {

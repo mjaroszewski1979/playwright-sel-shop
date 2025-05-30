@@ -1,4 +1,5 @@
 import { Page, expect, Locator } from '@playwright/test';
+import { isElementVisibleWithText } from '../utils/assertions';
 
 export class FirstProductPage {
     readonly page: Page;
@@ -77,24 +78,15 @@ export class FirstProductPage {
     }
   }
 
-  async isElementVisibleWithText(locatorName: Locator, expectedText: string): Promise<boolean> {
-  try {
-    await expect(locatorName).toBeVisible();
-    await expect(locatorName).toHaveText(expectedText);
-    return true;
-  } catch {
-    return false;
-  }
-}
 
 async isProductSectionDisplayedCorrectly(): Promise<boolean> {
   try {
-    const titleCorrect = await this.isElementVisibleWithText(this.productTitleH1, 'Piłka nożna KIPSTA F100');
-    const priceCorrect = await this.isElementVisibleWithText(this.priceAmountPara, '2,00 zł');
-    const detailsCorrect = await this.isElementVisibleWithText(this.productDetailsDiv, 'Piłka nożna Adidas Replika Liga Mistrzów rozmiar 5');
-    const stockCorrect = await this.isElementVisibleWithText(this.stockAvailablePara, 'Produkt dostępny na zamówienie');
-    const cartCorrect = await this.isElementVisibleWithText(this.goToBasketButton, 'Dodaj do koszyka');
-    const categoryCorrect = await this.isElementVisibleWithText(this.productCategoryDiv, 'Kategoria: Piłki');
+    const titleCorrect = await isElementVisibleWithText(this.productTitleH1, 'Piłka nożna KIPSTA F100');
+    const priceCorrect = await isElementVisibleWithText(this.priceAmountPara, '2,00 zł');
+    const detailsCorrect = await isElementVisibleWithText(this.productDetailsDiv, 'Piłka nożna Adidas Replika Liga Mistrzów rozmiar 5');
+    const stockCorrect = await isElementVisibleWithText(this.stockAvailablePara, 'Produkt dostępny na zamówienie');
+    const cartCorrect = await isElementVisibleWithText(this.goToBasketButton, 'Dodaj do koszyka');
+    const categoryCorrect = await isElementVisibleWithText(this.productCategoryDiv, 'Kategoria: Piłki');
 
     return titleCorrect && priceCorrect && detailsCorrect && stockCorrect && cartCorrect && categoryCorrect;
   } catch {
