@@ -1,4 +1,5 @@
 import { Page, expect, Locator } from '@playwright/test';
+import { isUrlMatches } from '../utils/urlUtils';
 
 export class PilkiPage {
     readonly page: Page;
@@ -19,6 +20,11 @@ export class PilkiPage {
 
 
     }
+
+     async verifyUserIsOnPilkiPage(): Promise<boolean> {
+          
+            return await isUrlMatches(this.page, 'http://www.selenium-shop.pl/kategoria-produktu/pilki/');
+            }
 
     
 

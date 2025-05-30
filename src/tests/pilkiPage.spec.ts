@@ -1,6 +1,17 @@
 import { test, expect } from '../pages/basePage';
 
-
+test('Weryfikacja url strony Pilki', async ({ 
+  mainPage,
+  firstProductPage,
+  pilkiPage,
+ }) => {
+  
+    await mainPage.goto();
+    await mainPage.clickFirstProductLink();
+    await firstProductPage.clickPilkiCategoryLink();
+  
+    expect(await pilkiPage.verifyUserIsOnPilkiPage()).toBe(true);
+  });
 
 test('Weryfikacja tytulu strony Pilki', async ({ 
   mainPage,
