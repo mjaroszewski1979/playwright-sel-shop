@@ -1,5 +1,6 @@
 import { Page, expect, Locator } from '@playwright/test';
 import { isElementVisibleWithText } from '../utils/assertions';
+import { clickElement } from '../utils/actions';
 
 export class FirstProductPage {
     readonly page: Page;
@@ -48,19 +49,19 @@ export class FirstProductPage {
   }
 
   async clickGoToBasketButton(): Promise<void> {
-    await this.goToBasketButton.click();
+    await clickElement(this.goToBasketButton);
   }
 
   async clickViewBasketLink(): Promise<void> {
-    await this.viewBasketLink.click();
+    await clickElement(this.viewBasketLink);
   }
 
   async clickPilkiCategoryLink(): Promise<void> {
-    await this.pilkiCategoryLink.click();
+    await clickElement(this.pilkiCategoryLink);
   }
 
   async clickRatingLink(): Promise<void> {
-    await this.ratingLink.click();
+    await clickElement(this.ratingLink);
   }
 
   async fillNumberOfProducts(): Promise<void> {

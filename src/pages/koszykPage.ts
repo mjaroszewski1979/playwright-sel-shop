@@ -1,5 +1,6 @@
 import { Page, expect, Locator } from '@playwright/test';
 import { isUrlMatches } from '../utils/urlUtils';
+import { clickElement } from '../utils/actions';
 
 export class KoszykPage {
     readonly page: Page;
@@ -72,7 +73,7 @@ export class KoszykPage {
   }
 
   async clickRemoveProductLink(): Promise<void> {
-    await this.removeLink.click();
+    await clickElement(this.removeLink);
   }
 
   async isRemovedProductMessageDisplayed(): Promise<boolean> {
@@ -86,7 +87,7 @@ export class KoszykPage {
   }
 
   async clickUpdateBasketButton(): Promise<void> {
-    await this.buttonUpdateBasket.click();
+    await clickElement(this.buttonUpdateBasket);
   }
 
   async updateBasketQuantity(): Promise<void> {

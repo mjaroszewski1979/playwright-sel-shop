@@ -1,5 +1,6 @@
 import { Page, expect, Locator } from '@playwright/test';
 import { isUrlMatches } from '../utils/urlUtils';
+import { clickElement } from '../utils/actions';
 
 export class ZamowieniaPage {
     readonly page: Page;
@@ -84,7 +85,7 @@ export class ZamowieniaPage {
     try {
       const orderNumber = await this.getOrderNumber()
       const orderDate = await this.getOrderTime()
-      await this.orderNumberLink.click();
+      await clickElement(this.orderNumberLink);
       await expect(this.orderNumberMark).toHaveText(orderNumber);
       await expect(this.orderDateMark).toHaveText(orderDate);
 
