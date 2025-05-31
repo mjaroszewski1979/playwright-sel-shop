@@ -9,6 +9,10 @@
 ## Features
 * E2E Testing: Validates critical user flows such as login, product selection, cart operations, and checkout.
 * Page Object Model: Organizes selectors and test logic into reusable, modular components.
+* Playwright's custom fixtures: Defined using a dedicated MyFixtures type and integrated via base.extend, allowing typed and reusable page objects to be injected into each test.
+* Dedicated Locator Sections: Each file in the /pages directory contains a dedicated section for defining locators, improving readability and maintainability of selectors.
+* Reusable Utilities: Commonly used functions are grouped into helper modules within the /utils folder, promoting code reuse and reducing duplication.
+* Centralized Configuration: Key environment data such as login credentials and the base URL are extracted into a single config.ts file, simplifying environment management and configuration.
 * GitHub Codespace Support: Enables instant development and testing setup in a cloud-based VS Code environment.
 * Test Reporting: Integrated Playwright test reporting for quick feedback and visibility.
 
