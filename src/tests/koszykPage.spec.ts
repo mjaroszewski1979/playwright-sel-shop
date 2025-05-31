@@ -1,5 +1,4 @@
 import { test, expect } from '../pages/basePage';
-import { clickElement } from '../utils/actions';
 
 
 
@@ -32,9 +31,9 @@ test('Weryfikacja widocznosci linku dodanego produktu w koszyku', async ({
  }) => {
   
     await mainPage.goto();
-    await clickElement(mainPage.firstProductLink);
-    await clickElement(firstProductPage.goToBasketButton);
-    await clickElement(mainPage.koszykMenu);
+    await mainPage.clickFirstProductLink();
+    await firstProductPage.clickGoToBasketButton();
+    await mainPage.gotoKoszykPage();
 
     expect(await koszykPage.isFirstProductLinkDisplayed()).toBe(true);
   });
@@ -46,10 +45,10 @@ test('Weryfikacja poprawnosci usuniecia dodanego produktu z koszyka', async ({
  }) => {
   
     await mainPage.goto();
-    await clickElement(mainPage.firstProductLink);
-    await clickElement(firstProductPage.goToBasketButton);
-    await clickElement(firstProductPage.viewBasketLink);
-    await clickElement(koszykPage.removeLink);
+    await mainPage.clickFirstProductLink();
+    await firstProductPage.clickGoToBasketButton();
+    await firstProductPage.clickViewBasketLink();
+    await koszykPage.clickRemoveProductLink();
 
     expect(await koszykPage.isRemovedProductMessageDisplayed()).toBe(true);
   });
@@ -61,10 +60,10 @@ test('Weryfikacja poprawnej liczby produktow w koszyku zakupowym', async ({
  }) => {
   
     await mainPage.goto();
-    await clickElement(mainPage.firstProductLink);
+    await mainPage.clickFirstProductLink();
     await firstProductPage.fillNumberOfProducts();
-    await clickElement(firstProductPage.goToBasketButton);
-    await clickElement(firstProductPage.viewBasketLink);
+    await firstProductPage.clickGoToBasketButton();
+    await firstProductPage.clickViewBasketLink();
 
     expect(await koszykPage.isNumberOfProductsCorrect()).toBe(true);
   });

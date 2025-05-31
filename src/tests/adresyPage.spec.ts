@@ -1,6 +1,5 @@
 import { test, expect } from '../pages/basePage';
 import { config } from '../utils/config';
-import { clickElement } from '../utils/actions';
 
 
 
@@ -13,7 +12,7 @@ test('Weryfikacja url strony Adresy', async ({
     await mainPage.goto();
     await mainPage.gotoMojeKontoPage();
     await mojeKontoPage.login(config.username, config.password);
-    await clickElement(mojeKontoPage.adresyLink);
+    await mojeKontoPage.clickElement(mojeKontoPage.adresyLink);
 
     expect(await adresyPage.verifyUserIsOnAdresyPage()).toBe(true);
   });
@@ -27,7 +26,7 @@ test('Weryfikacja poprawnosci sekcji Edytuj Adres', async ({
     await mainPage.goto();
     await mainPage.gotoMojeKontoPage();
     await mojeKontoPage.login(config.username, config.password);
-    await clickElement(mojeKontoPage.adresyLink);
+    await mojeKontoPage.clickElement(mojeKontoPage.adresyLink);
 
     expect(await adresyPage.isEditAddressSectionDisplayedCorrectly()).toBe(true);
   });
@@ -41,7 +40,7 @@ test('Weryfikacja poprawnosci edycji pola Adres Rozliczeniowy', async ({
     await mainPage.goto();
     await mainPage.gotoMojeKontoPage();
     await mojeKontoPage.login(config.username, config.password);
-    await clickElement(mojeKontoPage.adresyLink);
+    await mojeKontoPage.clickElement(mojeKontoPage.adresyLink);
 
     expect(await adresyPage.isEditingBillingAddressWorksCorrectly()).toBe(true);
   });

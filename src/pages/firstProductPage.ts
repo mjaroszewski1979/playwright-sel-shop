@@ -47,6 +47,10 @@ export class FirstProductPage {
     }
   }
 
+  async clickGoToBasketButton(): Promise<void> {
+    await this.goToBasketButton.click();
+  }
+
   async clickViewBasketLink(): Promise<void> {
     await this.viewBasketLink.click();
   }
@@ -55,6 +59,9 @@ export class FirstProductPage {
     await this.pilkiCategoryLink.click();
   }
 
+  async clickRatingLink(): Promise<void> {
+    await this.ratingLink.click();
+  }
 
   async fillNumberOfProducts(): Promise<void> {
     await expect(this.quantityInput).toBeVisible();

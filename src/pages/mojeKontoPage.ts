@@ -1,7 +1,6 @@
 import { Page, expect, Locator } from '@playwright/test';
 import { config } from '../utils/config';
 import { isUrlMatches } from '../utils/urlUtils';
-import { clickElement } from '../utils/actions';
 
 export class MojeKontoPage {
   readonly page: Page;
@@ -48,7 +47,7 @@ export class MojeKontoPage {
     await this.passwordField.fill(''); 
     await this.passwordField.type(password);
 
-    await clickElement(this.loginButton);
+    await this.loginButton.click();
   }
 
   async isLoginSuccessfull(): Promise<boolean> {
@@ -71,11 +70,15 @@ export class MojeKontoPage {
     }
   }
 
+  async clickElement(locatorName: Locator): Promise<void> {
+    await locatorName.click();
+  }
+
 
   async isLogoutSuccessfull(): Promise<boolean> {
     try {
       await this.login(config.username, config.password);
-      await clickElement(this.logoutLink);
+      await this.clickElement(this.logoutLink);
       await expect(this.loginButton).toBeVisible();
       return true;
     } catch {

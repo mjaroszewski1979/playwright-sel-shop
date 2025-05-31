@@ -2,7 +2,6 @@ import { Page, Locator } from '@playwright/test';
 import { isElementVisibleWithText, isElementVisibleWithPartialText } from '../utils/assertions';
 import { generateRandomStreet } from '../utils/actions';
 import { isUrlMatches } from '../utils/urlUtils';
-import { clickElement } from '../utils/actions';
 
 export class AdresyPage {
     readonly page: Page;
@@ -55,7 +54,7 @@ export class AdresyPage {
             const randomStreetName = generateRandomStreet();
             await this.streetInput.fill('');
             await this.streetInput.type(randomStreetName);
-            await clickElement(this.saveButton);
+            await this.saveButton.click();
             const successMessageCorrect = await isElementVisibleWithText(this.successMessageDiv, 'Adres został zmieniony.');
             const addressStreetCorrect = await isElementVisibleWithPartialText(this.addressFirstSection, randomStreetName);
 

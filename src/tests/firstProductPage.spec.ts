@@ -1,5 +1,4 @@
 import { test, expect } from '../pages/basePage';
-import { clickElement } from '../utils/actions';
 
 
 
@@ -9,7 +8,7 @@ test('Weryfikacja tytulu strony Pilka Kipsta 100', async ({
  }) => {
   
     await mainPage.goto();
-    await clickElement(mainPage.firstProductLink);
+    await mainPage.clickFirstProductLink();
 
     expect(await firstProductPage.isTitleMatches()).toBe(true);
   });
@@ -20,8 +19,8 @@ test('Weryfikacja widocznosci komunikatu o dodaniu produktu do koszyka', async (
  }) => {
   
     await mainPage.goto();
-    await clickElement(mainPage.firstProductLink);
-    await clickElement(firstProductPage.goToBasketButton);
+    await mainPage.clickFirstProductLink();
+    await firstProductPage.clickGoToBasketButton();
 
     expect(await firstProductPage.isAddedToBasketMessageDisplayed()).toBe(true);
   });
@@ -32,7 +31,7 @@ test('Weryfikacja poprawnosci informacji dotyczacych produktu', async ({
  }) => {
   
     await mainPage.goto();
-    await clickElement(mainPage.firstProductLink);
+    await mainPage.clickFirstProductLink();
 
     expect(await firstProductPage.isProductSectionDisplayedCorrectly()).toBe(true);
   });
@@ -43,8 +42,8 @@ test('Weryfikacja zgodnosci liczby opinii uzytkownikow', async ({
  }) => {
   
     await mainPage.goto();
-    await clickElement(mainPage.firstProductLink);
-    await clickElement(firstProductPage.ratingLink);
+    await mainPage.clickFirstProductLink();
+    await firstProductPage.clickRatingLink();
 
     expect(await firstProductPage.isRatingCountMatches()).toBe(true);
   });
