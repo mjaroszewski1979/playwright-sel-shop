@@ -12,7 +12,7 @@ test('Weryfikacja url strony Pliki Do Pobrania', async ({
     await mainPage.goto();
     await mainPage.gotoMojeKontoPage();
     await mojeKontoPage.login(config.username, config.password);
-    await mojeKontoPage.clickElement(mojeKontoPage.plikiDoPobraniaLink);
+    await mojeKontoPage.clickPlikiDoPobraniaLink();
 
     expect(await plikiDoPobraniaPage.verifyUserIsOnPlikiDoPobraniaPage()).toBe(true);
   });
@@ -26,7 +26,7 @@ test('Weryfikacja widocznosci i tekstu wyswietlonego komunikatu', async ({
     await mainPage.goto();
     await mainPage.gotoMojeKontoPage();
     await mojeKontoPage.login(config.username, config.password);
-    await mojeKontoPage.clickElement(mojeKontoPage.plikiDoPobraniaLink);
+    await mojeKontoPage.clickPlikiDoPobraniaLink();
 
     expect(await plikiDoPobraniaPage.isInfoMessageDisplayedCorrectly()).toBe(true);
   });

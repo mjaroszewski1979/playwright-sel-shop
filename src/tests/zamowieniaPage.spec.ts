@@ -12,7 +12,7 @@ test('Weryfikacja url strony Zamowienia', async ({
     await mainPage.goto();
     await mainPage.gotoMojeKontoPage();
     await mojeKontoPage.login(config.username, config.password);
-    await mojeKontoPage.clickElement(mojeKontoPage.zamowieniaLink);
+    await mojeKontoPage.clickZamowieniaLink();
 
     expect(await zamowieniaPage.verifyUserIsOnZamowieniaPage()).toBe(true);
   });
@@ -26,7 +26,7 @@ test('Weryfikacja ilosci zamowien na pojedynczej stronie', async ({
     await mainPage.goto();
     await mainPage.gotoMojeKontoPage();
     await mojeKontoPage.login(config.username, config.password);
-    await mojeKontoPage.clickElement(mojeKontoPage.zamowieniaLink);
+    await mojeKontoPage.clickZamowieniaLink();
 
 
     expect(await zamowieniaPage.isNumberOfOrdersMatches()).toBe(true);
@@ -41,7 +41,7 @@ test('Weryfikacja struktury tabeli zamowien', async ({
     await mainPage.goto();
     await mainPage.gotoMojeKontoPage();
     await mojeKontoPage.login(config.username, config.password);
-    await mojeKontoPage.clickElement(mojeKontoPage.zamowieniaLink);
+    await mojeKontoPage.clickZamowieniaLink();
 
 
     expect(await zamowieniaPage.isTextOfTableHeadersCorrect()).toBe(true);
@@ -56,7 +56,7 @@ test('Weryfikacja szczegolow zamowienia', async ({
     await mainPage.goto();
     await mainPage.gotoMojeKontoPage();
     await mojeKontoPage.login(config.username, config.password);
-    await mojeKontoPage.clickElement(mojeKontoPage.zamowieniaLink);
+    await mojeKontoPage.clickZamowieniaLink();
 
 
     expect(await zamowieniaPage.verifyOrderDetails()).toBe(true);

@@ -82,4 +82,20 @@ export class MojeKontoPage {
     }
   }
 
+  async clickAdresyLink(): Promise<void> {
+    await clickElement(this.adresyLink);
+  }
+
+  async clickPlikiDoPobraniaLink(): Promise<void> {
+    await clickElement(this.plikiDoPobraniaLink);
+  }
+
+  async clickSzczegolyKontaLink(): Promise<void> {
+    await clickElement(this.szczegolyKontaLink);
+  }
+
+  async clickZamowieniaLink(): Promise<void> {
+    await clickElement(this.zamowieniaLink);
+  }
+
 }

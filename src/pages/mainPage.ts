@@ -1,5 +1,6 @@
 import { Page, expect, Locator } from '@playwright/test';
 import { config } from '../utils/config';
+import { clickElement, hoverClickElement, scrollClickElement } from '../utils/actions';
 
 export class MainPage {
   readonly page: Page;
@@ -91,41 +92,35 @@ export class MainPage {
   }
 
   async clickFirstProductAddToCartButton(): Promise<void> {
-    await this.divFirstProduct.hover();
-    await this.addToCartFirstButton.click();
+    await hoverClickElement(this.divFirstProduct, this.addToCartFirstButton);
   }
 
   async clickSecondProductAddToCartButton(): Promise<void> {
-    await this.divSecondProduct.hover();
-    await this.addToCartSecondButton.click();
+    await hoverClickElement(this.divSecondProduct, this.addToCartSecondButton);
   }
 
   async clickFirstProductViewCartButton(): Promise<void> {
-    await this.divFirstProduct.hover();
-    await this.viewBasketButton.click();
+    await hoverClickElement(this.divFirstProduct, this.viewBasketButton);
   }
 
   async clickFirstProductLink(): Promise<void> {
-    await this.firstProductLink.click();
+    await clickElement(this.firstProductLink);
   }
 
   async gotoAnkietaPage(): Promise<void> {
-    await this.ankietaMenu.click();
+    await clickElement(this.ankietaMenu);
   }
 
   async gotoMojeKontoPage(): Promise<void> {
-    await this.mojeKontoMenu.click();
+    await clickElement(this.mojeKontoMenu);
   }
 
   async gotoKoszykPage(): Promise<void> {
-    await this.koszykMenu.click();
+    await clickElement(this.koszykMenu);
   }
 
   async gotoKoszykPageScroll(): Promise<void> {
-    await this.page.evaluate(() => window.scrollTo(0, 0));
-    await this.koszykMenu.click();
+    await scrollClickElement(this.koszykMenu, this.page);
   }
-
-
-
+  
 }
