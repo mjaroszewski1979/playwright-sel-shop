@@ -1,3 +1,5 @@
+![caption](https://github.com/mjaroszewski1979/playwright-sel-shop/blob/main/selenium_shop_img.jpg)
+
 # Selenium Shop E2E Tests with Playwright
 
 ### This is a TypeScript-based automated end-to-end (E2E) testing project built using Playwright. It is designed to verify the key functionalities of the web application Selenium Shop, a sample e-commerce site. The project follows the Page Object Model (POM) design pattern for clean, scalable, and maintainable test code.
