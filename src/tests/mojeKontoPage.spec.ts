@@ -1,6 +1,14 @@
 import { test, expect } from '../pages/basePage';
 
-test('Weryfikacja url strony Moje Konto', async ({ 
+/**
+ * Test to verify that the user is correctly redirected to the "My Account" page.
+ *
+ * Steps:
+ * 1. Navigate to the home page.
+ * 2. Navigate to the "My Account" page.
+ * 3. Assert that the current URL matches the expected "My Account" URL.
+ */
+test('Verify URL of My Account page', async ({ 
   mainPage,
   mojeKontoPage
  }) => {
@@ -11,7 +19,16 @@ test('Weryfikacja url strony Moje Konto', async ({
     expect(await mojeKontoPage.verifyUserIsOnMojeKontoPage()).toBe(true);
   });
 
-test('Weryfikacja procesu logowania z poprwana nazwa uzytkownika i haslem', async ({ 
+  /**
+ * Test to verify successful login with valid username and password.
+ *
+ * Steps:
+ * 1. Navigate to the home page.
+ * 2. Navigate to the "My Account" page.
+ * 3. Attempt to log in with valid credentials.
+ * 4. Assert that the login was successful.
+ */
+test('Verify login process with valid credentials', async ({ 
   mainPage,
   mojeKontoPage
  }) => {
@@ -22,7 +39,16 @@ test('Weryfikacja procesu logowania z poprwana nazwa uzytkownika i haslem', asyn
     expect(await mojeKontoPage.isLoginSuccessfull()).toBe(true);
   });
 
-test('Weryfikacja procesu logowania z niepoprwana nazwa uzytkownika i haslem', async ({ 
+  /**
+ * Test to verify login behavior with incorrect username and password.
+ *
+ * Steps:
+ * 1. Navigate to the home page.
+ * 2. Navigate to the "My Account" page.
+ * 3. Attempt to log in with invalid credentials.
+ * 4. Assert that an error message is displayed and login fails as expected.
+ */
+test('Verify login process with invalid credentials', async ({ 
   mainPage,
   mojeKontoPage
  }) => {
@@ -33,7 +59,16 @@ test('Weryfikacja procesu logowania z niepoprwana nazwa uzytkownika i haslem', a
     expect(await mojeKontoPage.isIncorrectLoginResolvedProperly()).toBe(true);
   });
 
-test('Weryfikacja poprawnosci procesu wylogowania', async ({ 
+  /**
+ * Test to verify that the logout process works correctly.
+ *
+ * Steps:
+ * 1. Navigate to the home page.
+ * 2. Navigate to the "My Account" page.
+ * 3. Perform login and then logout.
+ * 4. Assert that the user is successfully logged out and redirected appropriately.
+ */
+test('Verify logout process works correctly', async ({ 
   mainPage,
   mojeKontoPage
  }) => {
