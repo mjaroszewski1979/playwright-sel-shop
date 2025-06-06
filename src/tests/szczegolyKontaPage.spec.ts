@@ -2,8 +2,17 @@ import { test, expect } from '../pages/basePage';
 import { config } from '../utils/config';
 
 
-
-test('Weryfikacja url strony Szczegoly Konta', async ({ 
+/**
+ * Test to verify that the user is correctly redirected to the "Account Details" page after logging in.
+ *
+ * Steps:
+ * 1. Navigate to the main page.
+ * 2. Open the "My Account" page.
+ * 3. Log in using valid credentials.
+ * 4. Click the "Account Details" link from the user account menu.
+ * 5. Assert that the current URL matches the expected one for the "Account Details" page.
+ */
+test('Verify URL of Account Details page', async ({ 
   mainPage,
   mojeKontoPage,
   szczegolyKontaPage,
@@ -17,7 +26,17 @@ test('Weryfikacja url strony Szczegoly Konta', async ({
     expect(await szczegolyKontaPage.verifyUserIsOnSzczegolyKontaPage()).toBe(true);
   });
 
-test('Weryfikacja wartosci widocznych w polach input strony Szczegoly Konta', async ({ 
+  /**
+ * Test to verify that the input fields on the "Account Details" page are prefilled with the correct values.
+ *
+ * Steps:
+ * 1. Navigate to the main page.
+ * 2. Open the "My Account" page.
+ * 3. Log in using valid credentials.
+ * 4. Navigate to the "Account Details" page.
+ * 5. Assert that input fields such as first name, last name, and email contain the expected user data.
+ */
+test('Verify correctness of input field values on Account Details page', async ({ 
   mainPage,
   mojeKontoPage,
   szczegolyKontaPage,
