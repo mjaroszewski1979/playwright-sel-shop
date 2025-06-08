@@ -2,6 +2,10 @@ import { Page, expect, Locator } from '@playwright/test';
 import { isElementVisibleWithText } from '../utils/assertions';
 import { clickElement } from '../utils/actions';
 
+/**
+ * Page Object Model for the "First Product" details page
+ * (Piłka nożna KIPSTA F100).
+ */
 export class FirstProductPage {
     readonly page: Page;
 
@@ -39,47 +43,70 @@ export class FirstProductPage {
         this.ratingCommentDiv = page.locator('div.comment_container');
     }
 
-    async isTitleMatches(): Promise<boolean> {
-    try {
-      await expect(this.page).toHaveTitle('Piłka nożna KIPSTA F100 – Selenium Shop Automatyzacja Testów');
-      return true;
-    } catch {
-      return false;
-    }
+  /**
+ * Verifies that the title of the product page matches the expected title.
+ */
+  async isTitleMatches(): Promise<boolean> {
+  try {
+    await expect(this.page).toHaveTitle('Piłka nożna KIPSTA F100 – Selenium Shop Automatyzacja Testów');
+    return true;
+  } catch {
+    return false;
   }
+}
 
-  async clickGoToBasketButton(): Promise<void> {
-    await clickElement(this.goToBasketButton);
+/**
+ * Clicks the "Dodaj do koszyka" button.
+ */
+async clickGoToBasketButton(): Promise<void> {
+  await clickElement(this.goToBasketButton);
+}
+
+/**
+ * Clicks the "Zobacz koszyk" link.
+ */
+async clickViewBasketLink(): Promise<void> {
+  await clickElement(this.viewBasketLink);
+}
+
+/**
+ * Clicks the category link for "Piłki".
+ */
+async clickPilkiCategoryLink(): Promise<void> {
+  await clickElement(this.pilkiCategoryLink);
+}
+
+/**
+ * Clicks the link to open the product rating section.
+ */
+async clickRatingLink(): Promise<void> {
+  await clickElement(this.ratingLink);
+}
+
+/**
+ * Sets the product quantity input to "2".
+ */
+async fillNumberOfProducts(): Promise<void> {
+  await expect(this.quantityInput).toBeVisible();
+  await this.quantityInput.fill('');        
+  await this.quantityInput.type('2');
+}
+
+/**
+ * Checks if the success message confirming the item was added to the basket is visible.
+ */
+async isAddedToBasketMessageDisplayed(): Promise<boolean> {
+  try {
+    await expect(this.successMessage).toBeVisible();
+    return true;
+  } catch {
+    return false;
   }
+}
 
-  async clickViewBasketLink(): Promise<void> {
-    await clickElement(this.viewBasketLink);
-  }
-
-  async clickPilkiCategoryLink(): Promise<void> {
-    await clickElement(this.pilkiCategoryLink);
-  }
-
-  async clickRatingLink(): Promise<void> {
-    await clickElement(this.ratingLink);
-  }
-
-  async fillNumberOfProducts(): Promise<void> {
-    await expect(this.quantityInput).toBeVisible();
-    await this.quantityInput.fill('');        
-    await this.quantityInput.type('2');
-  }
-
-  async isAddedToBasketMessageDisplayed(): Promise<boolean> {
-    try {
-      await expect(this.successMessage).toBeVisible();
-      return true;
-    } catch {
-      return false;
-    }
-  }
-
-
+/**
+* Validates that key product page sections and elements are displayed with the expected text.
+*/
 async isProductSectionDisplayedCorrectly(): Promise<boolean> {
   try {
     const titleCorrect = await isElementVisibleWithText(this.productTitleH1, 'Piłka nożna KIPSTA F100');
@@ -95,6 +122,9 @@ async isProductSectionDisplayedCorrectly(): Promise<boolean> {
   }
 }
 
+/**
+* Compares the rating count label with the actual number of rating comments.
+*/
 async isRatingCountMatches(): Promise<boolean> {
   try {
     const ratingCount = await this.ratingCountSpan.innerText();
@@ -106,7 +136,4 @@ async isRatingCountMatches(): Promise<boolean> {
     return false;
   }
 }
-
-
-
 }
