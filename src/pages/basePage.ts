@@ -10,6 +10,10 @@ import { SzczegolyKontaPage } from './szczegolyKontaPage';
 import { AdresyPage } from './adresyPage';
 import { PlikiDoPobraniaPage } from './plikiDoPobraniaPage';
 
+/**
+ * Custom Playwright fixtures for Selenium Shop tests.
+ * Each fixture provides an instance of a Page Object representing a specific part of the application.
+ */
 type MyFixtures = {
     mainPage: MainPage,
     ankietaPage: AnkietaPage,
@@ -23,6 +27,9 @@ type MyFixtures = {
     plikiDoPobraniaPage: PlikiDoPobraniaPage,
 }
 
+/**
+ * Extended Playwright `test` function with custom fixtures for Page Object Models.
+ */
 export const test = base.extend<MyFixtures>({
     mainPage: async ({ page }, use) => {
         await use(new MainPage(page))
@@ -57,4 +64,5 @@ export const test = base.extend<MyFixtures>({
 
 })
 
+// Re-export expect for use in tests
 export { expect} from '@playwright/test';
