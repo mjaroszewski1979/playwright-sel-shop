@@ -2,6 +2,9 @@ import { Page, expect, Locator } from '@playwright/test';
 import { isUrlMatches } from '../utils/urlUtils';
 import { clickElement } from '../utils/actions';
 
+/**
+ * Page Object Model for the "Koszyk" (Cart) page.
+ */
 export class KoszykPage {
     readonly page: Page;
 
@@ -15,6 +18,10 @@ export class KoszykPage {
     readonly totalPriceAmount: Locator;
     readonly buttonUpdateBasket: Locator;
 
+    /**
+   * Constructor for KoszykPage.
+   * @param page - Playwright Page instance.
+   */
     constructor(page: Page) {
         this.page = page;
 
@@ -31,6 +38,9 @@ export class KoszykPage {
 
     
 
+    /**
+   * Verifies that the cart page title matches the expected value.
+   */
     async isTitleMatches(): Promise<boolean> {
     try {
       await expect(this.page).toHaveTitle('Koszyk – Selenium Shop Automatyzacja Testów');
@@ -40,42 +50,60 @@ export class KoszykPage {
     }
   }
 
+  /**
+   * Verifies that the user is on the correct cart page URL.
+   */
    async verifyUserIsOnKoszykPage(): Promise<boolean> {
         
           return await isUrlMatches(this.page, 'http://www.selenium-shop.pl/koszyk/');
           }
-    
-    async isFirstProductLinkDisplayed(): Promise<boolean> {
-    try {
-      await expect(this.productFirstLink).toBeVisible();
-      return true;
-    } catch {
-      return false;
-    }
+  
+  /**
+ * Checks if the first product link is visible in the cart.
+ */
+  async isFirstProductLinkDisplayed(): Promise<boolean> {
+  try {
+    await expect(this.productFirstLink).toBeVisible();
+    return true;
+  } catch {
+    return false;
   }
-    async isSecondProductLinkDisplayed(): Promise<boolean> {
-    try {
-      await expect(this.productSecondLink).toBeVisible();
-      return true;
-    } catch {
-      return false;
-    }
+}
+  /**
+   * Checks if the second product link is visible in the cart.
+   */
+  async isSecondProductLinkDisplayed(): Promise<boolean> {
+  try {
+    await expect(this.productSecondLink).toBeVisible();
+    return true;
+  } catch {
+    return false;
   }
+}
 
-    async isNumberOfProductsCorrect(): Promise<boolean> {
-    try {
-      const value = await this.quantityInput.getAttribute('value');
-      expect(value).toBe('2');
-      return true;
-    } catch {
-      return false;
-    }
+  /**
+   * Checks if the number of products in the cart is correct (expected: 2).
+   */
+  async isNumberOfProductsCorrect(): Promise<boolean> {
+  try {
+    const value = await this.quantityInput.getAttribute('value');
+    expect(value).toBe('2');
+    return true;
+  } catch {
+    return false;
   }
+}
 
+  /**
+   * Removes a product from the cart by clicking the "remove" link.
+   */
   async clickRemoveProductLink(): Promise<void> {
     await clickElement(this.removeLink);
   }
 
+  /**
+   * Verifies that the "empty cart" message is displayed after removal.
+   */
   async isRemovedProductMessageDisplayed(): Promise<boolean> {
     try {
       await expect(this.emptyCartMessage).toBeVisible();
@@ -86,10 +114,16 @@ export class KoszykPage {
     }
   }
 
+  /**
+   * Clicks the "Zaktualizuj koszyk" (Update Cart) button.
+   */
   async clickUpdateBasketButton(): Promise<void> {
     await clickElement(this.buttonUpdateBasket);
   }
 
+  /**
+   * Updates the product quantity to "2" and updates the cart.
+   */
   async updateBasketQuantity(): Promise<void> {
     await expect(this.inputQantityUpdate).toBeVisible();
     await this.inputQantityUpdate.fill('');        
@@ -97,6 +131,9 @@ export class KoszykPage {
     this.clickUpdateBasketButton();
   }
 
+  /**
+   * Validates that the total price after quantity update is correct.
+   */
   async isUpdatedTotalAmountCorrect(): Promise<boolean> {
     try {
       await expect(this.totalPriceAmount).toBeVisible();

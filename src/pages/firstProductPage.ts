@@ -24,6 +24,10 @@ export class FirstProductPage {
     readonly ratingLink: Locator;
     readonly ratingCommentDiv: Locator;
 
+    /**
+   * Constructor for FirstProductPage.
+   * @param page - Playwright Page instance.
+   */
     constructor(page: Page) {
         this.page = page;
 
