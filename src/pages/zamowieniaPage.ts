@@ -6,49 +6,47 @@ import { clickElement } from '../utils/actions';
  * Page Object Model for the "Orders" page in the Selenium Shop application.
  */
 export class ZamowieniaPage {
-    readonly page: Page;
+  readonly page: Page;
 
-    // Locators
-    readonly singleOrderRow: Locator;
-    readonly ordersTableHeaderSpan: Locator;
-    readonly orderNumberLink: Locator;
-    readonly orderTime: Locator;
-    readonly orderNumberMark: Locator;
-    readonly orderDateMark: Locator;
+  // Locators
+  readonly singleOrderRow: Locator;
+  readonly ordersTableHeaderSpan: Locator;
+  readonly orderNumberLink: Locator;
+  readonly orderTime: Locator;
+  readonly orderNumberMark: Locator;
+  readonly orderDateMark: Locator;
 
-
-    /**
+  /**
    * Constructor for ZamowieniaPage.
    * @param page - Playwright Page instance.
    */
-    constructor(page: Page) {
-        this.page = page;
+  constructor(page: Page) {
+    this.page = page;
 
-        // Locators initialization
-        this.singleOrderRow = page.locator('tr.woocommerce-orders-table__row.woocommerce-orders-table__row--status-on-hold.order');
-        this.ordersTableHeaderSpan = page.locator('span.nobr');
-        this.orderNumberLink = page.locator('td[data-title="Zamówienie"] > a').first();
-        this.orderTime = page.locator('td[data-title="Data"] time').first();
-        this.orderNumberMark = page.locator('p > mark.order-number');
-        this.orderDateMark = page.locator('p > mark.order-date');
+    // Locators initialization
+    this.singleOrderRow = page.locator(
+      'tr.woocommerce-orders-table__row.woocommerce-orders-table__row--status-on-hold.order'
+    );
+    this.ordersTableHeaderSpan = page.locator('span.nobr');
+    this.orderNumberLink = page.locator('td[data-title="Zamówienie"] > a').first();
+    this.orderTime = page.locator('td[data-title="Data"] time').first();
+    this.orderNumberMark = page.locator('p > mark.order-number');
+    this.orderDateMark = page.locator('p > mark.order-date');
+  }
 
-    }
-
-    /**
+  /**
    * Verifies whether the current URL matches the expected Orders page URL.
    * @returns true if the URL matches, false otherwise.
    */
-    async verifyUserIsOnZamowieniaPage(): Promise<boolean> {
-      
+  async verifyUserIsOnZamowieniaPage(): Promise<boolean> {
     return await isUrlMatches(this.page, 'http://www.selenium-shop.pl/moje-konto/orders/');
-    }
+  }
 
-
-    /**
+  /**
    * Checks whether the number of displayed orders matches the expected count (10).
    * @returns true if count matches, false otherwise.
    */
-    async isNumberOfOrdersMatches(): Promise<boolean> {
+  async isNumberOfOrdersMatches(): Promise<boolean> {
     try {
       await expect(this.singleOrderRow).toHaveCount(10);
       return true;
@@ -62,14 +60,7 @@ export class ZamowieniaPage {
    * @returns true if all headers are correct, false otherwise.
    */
   async isTextOfTableHeadersCorrect(): Promise<boolean> {
-
-    const expectedTexts = [
-      'Zamówienie',
-      'Data',
-      'Status',
-      'Suma',
-      'Działania'
-    ];
+    const expectedTexts = ['Zamówienie', 'Data', 'Status', 'Suma', 'Działania'];
 
     try {
       for (let i = 0; i < expectedTexts.length; i++) {
@@ -80,7 +71,6 @@ export class ZamowieniaPage {
       return false;
     }
   }
-
 
   /**
    * Retrieves the order number (without the '#' symbol) from the first order row.
@@ -114,17 +104,16 @@ export class ZamowieniaPage {
    */
   async verifyOrderDetails(): Promise<boolean> {
     try {
-      const orderNumber = await this.getOrderNumber()
-      const orderDate = await this.getOrderTime()
+      const orderNumber = await this.getOrderNumber();
+      const orderDate = await this.getOrderTime();
       await clickElement(this.orderNumberLink);
       await expect(this.orderNumberMark).toHaveText(orderNumber);
       await expect(this.orderDateMark).toHaveText(orderDate);
 
       return true;
     } catch (error) {
-    console.error('Order details validation failed:', error);
-    return false;
+      console.error('Order details validation failed:', error);
+      return false;
+    }
   }
-  }
-
 }

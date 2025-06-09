@@ -1,7 +1,6 @@
 import { Page, expect } from '@playwright/test';
 import { isUrlMatches } from '../utils/urlUtils';
 
-
 /**
  * Page Object Model class for the "Ankieta" (Survey) page.
  * Encapsulates verification logic for title and URL.
@@ -16,7 +15,6 @@ export class AnkietaPage {
   constructor(page: Page) {
     this.page = page;
   }
-
 
   /**
    * Verifies that the page title matches the expected title for the Ankieta page.
@@ -37,9 +35,6 @@ export class AnkietaPage {
    * @returns True if URL matches, otherwise false.
    */
   async verifyUserIsOnAnkietaPage(): Promise<boolean> {
-      
-        return await isUrlMatches(this.page, 'http://www.selenium-shop.pl/o-nas/');
-        }
-  
-
+    return await isUrlMatches(this.page, 'http://www.selenium-shop.pl/o-nas/');
+  }
 }

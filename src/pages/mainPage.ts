@@ -33,7 +33,10 @@ export class MainPage {
     this.menuItems = page.locator('ul#menu-menu-1 li.menu-item-type-post_type');
     this.menuLinks = page.locator('ul#menu-menu-1 li.menu-item > a');
     this.productItems = page.locator('div.shop-item');
-    this.firstProductLink = page.getByRole('link', { name: 'Piłka nożna KIPSTA F100', exact: true });
+    this.firstProductLink = page.getByRole('link', {
+      name: 'Piłka nożna KIPSTA F100',
+      exact: true,
+    });
     this.ankietaMenu = page.locator('li#menu-item-134 a', { hasText: 'Ankieta' });
     this.mojeKontoMenu = page.locator('li#menu-item-136 a', { hasText: 'Moje konto' });
     this.koszykMenu = page.locator('li#menu-item-135 a', { hasText: 'Koszyk' });
@@ -56,7 +59,6 @@ export class MainPage {
    * @returns true if the title matches, false otherwise
    */
   async isTitleMatches(): Promise<boolean> {
-
     try {
       await expect(this.page).toHaveTitle('Selenium Shop Automatyzacja Testów');
       return true;
@@ -70,7 +72,6 @@ export class MainPage {
    * @returns true if the count is correct, false otherwise
    */
   async isNumberOfMenuItemsCorrect(): Promise<boolean> {
-
     try {
       await expect(this.menuItems).toHaveCount(6);
       return true;
@@ -84,14 +85,13 @@ export class MainPage {
    * @returns true if all texts match, false otherwise
    */
   async isTextOfMenuItemsCorrect(): Promise<boolean> {
-
     const expectedTexts = [
       'Strona główna',
       'Ankieta',
       'Koszyk',
       'Moje konto',
       'Sklep',
-      'Zamówienie'
+      'Zamówienie',
     ];
 
     try {
@@ -109,7 +109,6 @@ export class MainPage {
    * @returns true if product count is correct, false otherwise
    */
   async isNumberOfProductItemsCorrect(): Promise<boolean> {
-
     try {
       await expect(this.productItems).toHaveCount(8);
       return true;
@@ -173,5 +172,4 @@ export class MainPage {
   async gotoKoszykPageScroll(): Promise<void> {
     await scrollClickElement(this.koszykMenu, this.page);
   }
-  
 }

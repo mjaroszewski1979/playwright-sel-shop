@@ -21,7 +21,7 @@ export class MojeKontoPage {
   readonly adresyLink: Locator;
   readonly plikiDoPobraniaLink: Locator;
 
-   /**
+  /**
    * Constructor for MojeKontoPage.
    * @param page - Playwright Page instance.
    */
@@ -39,17 +39,15 @@ export class MojeKontoPage {
     this.incorrectLoginAlert = page.locator('ul.woocommerce-error');
     this.adresyLink = page.locator('a', { hasText: 'Adresy' }).first();
     this.plikiDoPobraniaLink = page.locator('a', { hasText: 'Pliki do pobrania' }).first();
-
   }
 
   /**
    * Checks if the user is on the "Moje Konto" (My Account) page.
    * @returns true if the URL matches the expected account page, false otherwise
    */
-   async verifyUserIsOnMojeKontoPage(): Promise<boolean> {
-        
-          return await isUrlMatches(this.page, 'http://www.selenium-shop.pl/moje-konto/');
-          }
+  async verifyUserIsOnMojeKontoPage(): Promise<boolean> {
+    return await isUrlMatches(this.page, 'http://www.selenium-shop.pl/moje-konto/');
+  }
 
   /**
    * Performs login using provided credentials.
@@ -57,11 +55,10 @@ export class MojeKontoPage {
    * @param password - The password to log in with
    */
   async login(username: string, password: string): Promise<void> {
-
-    await this.usernameField.fill(''); 
+    await this.usernameField.fill('');
     await this.usernameField.type(username);
 
-    await this.passwordField.fill(''); 
+    await this.passwordField.fill('');
     await this.passwordField.type(password);
 
     await clickElement(this.loginButton);
@@ -88,7 +85,9 @@ export class MojeKontoPage {
   async isIncorrectLoginResolvedProperly(): Promise<boolean> {
     try {
       await this.login('wronguser', 'wrongpass');
-      await expect(this.incorrectLoginAlert).toContainText('Nieznana użytkownik. Proszę sprawdzić ponownie lub spróbować swój email.');
+      await expect(this.incorrectLoginAlert).toContainText(
+        'Nieznana użytkownik. Proszę sprawdzić ponownie lub spróbować swój email.'
+      );
       return true;
     } catch {
       return false;
@@ -137,5 +136,4 @@ export class MojeKontoPage {
   async clickZamowieniaLink(): Promise<void> {
     await clickElement(this.zamowieniaLink);
   }
-
 }
