@@ -1,5 +1,6 @@
-import { Page, expect } from '@playwright/test';
+import { Page, Locator, Dialog, expect } from '@playwright/test';
 import { isUrlMatches } from '../utils/urlUtils';
+import { clickElement } from '../utils/actions';
 
 /**
  * Page Object Model class for the "Ankieta" (Survey) page.
@@ -8,12 +9,18 @@ import { isUrlMatches } from '../utils/urlUtils';
 export class AnkietaPage {
   readonly page: Page;
 
+  // Locators
+  readonly buttonAlert: Locator;
+
   /**
    * Constructor for AnkietaPage.
    * @param page - Playwright Page instance.
    */
   constructor(page: Page) {
     this.page = page;
+
+    // Initialize locators
+    this.buttonAlert = page.locator('#alertPrzycisk');
   }
 
   /**
@@ -21,7 +28,6 @@ export class AnkietaPage {
    * @returns True if title matches, otherwise false.
    */
   async isTitleMatches(): Promise<boolean> {
-    // Sprawdzenie tytułu przez oczekiwanie – jeśli nie pasuje, rzuci wyjątek
     try {
       await expect(this.page).toHaveTitle('Ankieta – Selenium Shop Automatyzacja Testów');
       return true;
@@ -36,5 +42,59 @@ export class AnkietaPage {
    */
   async verifyUserIsOnAnkietaPage(): Promise<boolean> {
     return await isUrlMatches(this.page, 'http://www.selenium-shop.pl/o-nas/');
+  }
+
+  /**
+   * Clicks on the alert-triggering button element to open a browser alert dialog.
+   */
+  async clickInputAlert(): Promise<void> {
+    await clickElement(this.buttonAlert);
+  }
+
+  /**
+   * Registers a one-time alert (dialog) event handler.
+   * When the alert appears, it verifies the alert's content and accepts it.
+   */
+  private registerAlertHandler(): void {
+    this.page.once('dialog', async (dialog) => {
+      await this.verifyAlertText(dialog);
+      await this.acceptAlert(dialog);
+    });
+  }
+
+  /**
+   * Verifies that the dialog is of type 'alert' and contains the expected message.
+   * @param dialog The Dialog object triggered by the browser.
+   */
+  private async verifyAlertText(dialog: Dialog): Promise<void> {
+    expect(dialog.type()).toBe('alert');
+    expect(dialog.message()).toContain('To jest okno „Allert” strony www.selenium-shop.pl');
+  }
+
+  /**
+   * Accepts (closes) the currently opened alert dialog by clicking the 'OK' button.
+   * @param dialog The Dialog object to be accepted.
+   */
+  private async acceptAlert(dialog: Dialog): Promise<void> {
+    await dialog.accept();
+  }
+
+  /**
+   * Verifies that the alert is handled correctly by:
+   *  - Registering the alert handler.
+   *  - Triggering the alert via button click.
+   *  - Asserting that the button remains visible after alert is handled.
+   * @returns True if alert is handled successfully, otherwise false.
+   */
+  async isAlertHandledCorrectly(): Promise<boolean> {
+    try {
+      this.registerAlertHandler();
+      await this.clickInputAlert();
+      await expect(this.buttonAlert).toBeVisible();
+      return true;
+    } catch (error) {
+      console.error('Alert handling failed:', error);
+      return false;
+    }
   }
 }

@@ -29,3 +29,28 @@ test('Verify Survey page URL', async ({ mainPage, ankietaPage }) => {
 
   expect(await ankietaPage.verifyUserIsOnAnkietaPage()).toBe(true);
 });
+
+/**
+ * Test to verify that alert is handled properly and contains correct text.
+ *
+ * Steps:
+ * Navigates to the main page and then to the "Ankieta" page.
+ * It verifies that:
+ *  - An alert dialog is correctly triggered after clicking the designated button.
+ *  - The alert contains the expected message.
+ *  - The alert is properly accepted (closed).
+ *  - The button that triggered the alert remains visible afterward.
+ *
+ * Expected Result:
+ * The alert should be handled without error, with correct message content and
+ * proper dismissal behavior.
+ */
+test('Verify alert is handled properly and contain correct text', async ({
+  mainPage,
+  ankietaPage,
+}) => {
+  await mainPage.goto();
+  await mainPage.gotoAnkietaPage();
+
+  expect(await ankietaPage.isAlertHandledCorrectly()).toBe(true);
+});
