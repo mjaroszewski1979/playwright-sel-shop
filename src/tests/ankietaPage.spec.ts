@@ -64,3 +64,13 @@ test('Verify prompt alert is handled properly with provided text', async ({
 
   expect(await ankietaPage.isPromptAlertHandledCorrectly()).toBe(true);
 });
+
+test('Verify confirm alert is handled properly and contain correct text', async ({
+  mainPage,
+  ankietaPage,
+}) => {
+  await mainPage.goto();
+  await mainPage.gotoAnkietaPage();
+
+  expect(await ankietaPage.isConfirmAlertHandledCorrectly()).toBe(true);
+});

@@ -12,6 +12,7 @@ export class AnkietaPage {
   // Locators
   readonly buttonAlert: Locator;
   readonly buttonPromptAlert: Locator;
+  readonly buttonConfirmAlert: Locator;
 
   /**
    * Constructor for AnkietaPage.
@@ -23,6 +24,7 @@ export class AnkietaPage {
     // Initialize locators
     this.buttonAlert = page.locator('#alertPrzycisk');
     this.buttonPromptAlert = page.locator('#promtAlertPrzycisk');
+    this.buttonConfirmAlert = page.locator('#confimationAlertPrzycisk');
   }
 
   /**
@@ -57,15 +59,31 @@ export class AnkietaPage {
     await clickElement(this.buttonPromptAlert);
   }
 
+  async clickButtonConfirmAlert(): Promise<void> {
+    await clickElement(this.buttonConfirmAlert);
+  }
+
   /**
    * Registers a one-time alert (dialog) event handler.
    * When the alert appears, it verifies the alert's content and accepts it.
    */
+
   private registerAlertHandler(): void {
     this.page.once('dialog', async (dialog) => {
       await this.verifyAlert(dialog);
-      await this.verifyAlertText(dialog);
+      await this.verifyAlertText(dialog, 'To jest okno „Allert” strony www.selenium-shop.pl');
       await this.acceptAlert(dialog);
+    });
+  }
+
+  private registerConfirmAlertHandler(): void {
+    this.page.once('dialog', async (dialog) => {
+      await this.verifyConfirmAlert(dialog);
+      await this.verifyAlertText(
+        dialog,
+        'Czy chcesz zatwierdzić operację usunięcia Twoich danych osobowych?'
+      );
+      await this.dismissAlert(dialog);
     });
   }
   private registerPromptAlertHandler(): void {
@@ -87,8 +105,12 @@ export class AnkietaPage {
     expect(dialog.type()).toBe('prompt');
   }
 
-  private async verifyAlertText(dialog: Dialog): Promise<void> {
-    expect(dialog.message()).toContain('To jest okno „Allert” strony www.selenium-shop.pl');
+  private async verifyConfirmAlert(dialog: Dialog): Promise<void> {
+    expect(dialog.type()).toBe('confirm');
+  }
+
+  private async verifyAlertText(dialog: Dialog, text: string): Promise<void> {
+    expect(dialog.message()).toContain(text);
   }
 
   /**
@@ -97,6 +119,10 @@ export class AnkietaPage {
    */
   private async acceptAlert(dialog: Dialog): Promise<void> {
     await dialog.accept();
+  }
+
+  private async dismissAlert(dialog: Dialog): Promise<void> {
+    await dialog.dismiss();
   }
 
   private async acceptPromptAlert(dialog: Dialog, text: string): Promise<void> {
@@ -127,6 +153,18 @@ export class AnkietaPage {
       this.registerPromptAlertHandler();
       await this.clickButtonPromptAlert();
       await expect(this.buttonPromptAlert).toBeVisible();
+      return true;
+    } catch (error) {
+      console.error('Alert handling failed:', error);
+      return false;
+    }
+  }
+
+  async isConfirmAlertHandledCorrectly(): Promise<boolean> {
+    try {
+      this.registerConfirmAlertHandler();
+      await this.clickButtonConfirmAlert();
+      await expect(this.buttonConfirmAlert).toBeVisible();
       return true;
     } catch (error) {
       console.error('Alert handling failed:', error);
