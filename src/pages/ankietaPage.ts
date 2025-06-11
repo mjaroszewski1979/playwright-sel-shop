@@ -1,6 +1,7 @@
 import { Page, Locator, Dialog, expect } from '@playwright/test';
 import { isUrlMatches } from '../utils/urlUtils';
 import { clickElement } from '../utils/actions';
+import { isElementVisibleWithText } from '../utils/assertions';
 
 /**
  * Page Object Model class for the "Ankieta" (Survey) page.
@@ -13,6 +14,8 @@ export class AnkietaPage {
   readonly buttonAlert: Locator;
   readonly buttonPromptAlert: Locator;
   readonly buttonConfirmAlert: Locator;
+  readonly buttonProces: Locator;
+  readonly spanProces: Locator;
 
   /**
    * Constructor for AnkietaPage.
@@ -25,6 +28,8 @@ export class AnkietaPage {
     this.buttonAlert = page.locator('#alertPrzycisk');
     this.buttonPromptAlert = page.locator('#promtAlertPrzycisk');
     this.buttonConfirmAlert = page.locator('#confimationAlertPrzycisk');
+    this.buttonProces = page.locator('#proces');
+    this.spanProces = page.locator('#procesText');
   }
 
   /**
@@ -61,6 +66,10 @@ export class AnkietaPage {
 
   async clickButtonConfirmAlert(): Promise<void> {
     await clickElement(this.buttonConfirmAlert);
+  }
+
+  async clickButtonProces(): Promise<void> {
+    await clickElement(this.buttonProces);
   }
 
   /**
@@ -166,6 +175,21 @@ export class AnkietaPage {
       await this.clickButtonConfirmAlert();
       await expect(this.buttonConfirmAlert).toBeVisible();
       return true;
+    } catch (error) {
+      console.error('Alert handling failed:', error);
+      return false;
+    }
+  }
+
+  async isProcesElementDisplayedProperly(): Promise<boolean> {
+    try {
+      this.clickButtonProces();
+      await this.clickButtonConfirmAlert();
+      const procesCorrect = await isElementVisibleWithText(
+        this.spanProces,
+        'Element Proces został wyświetlony'
+      );
+      return procesCorrect;
     } catch (error) {
       console.error('Alert handling failed:', error);
       return false;

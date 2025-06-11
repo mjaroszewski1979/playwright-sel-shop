@@ -74,3 +74,13 @@ test('Verify confirm alert is handled properly and contain correct text', async 
 
   expect(await ankietaPage.isConfirmAlertHandledCorrectly()).toBe(true);
 });
+
+test('Verify proces element is displayed properly and contain correct text', async ({
+  mainPage,
+  ankietaPage,
+}) => {
+  await mainPage.goto();
+  await mainPage.gotoAnkietaPage();
+
+  expect(await ankietaPage.isProcesElementDisplayedProperly()).toBe(true);
+});
