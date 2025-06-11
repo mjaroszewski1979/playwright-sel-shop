@@ -11,6 +11,7 @@ export class AnkietaPage {
 
   // Locators
   readonly buttonAlert: Locator;
+  readonly buttonPromptAlert: Locator;
 
   /**
    * Constructor for AnkietaPage.
@@ -21,6 +22,7 @@ export class AnkietaPage {
 
     // Initialize locators
     this.buttonAlert = page.locator('#alertPrzycisk');
+    this.buttonPromptAlert = page.locator('#promtAlertPrzycisk');
   }
 
   /**
@@ -47,8 +49,12 @@ export class AnkietaPage {
   /**
    * Clicks on the alert-triggering button element to open a browser alert dialog.
    */
-  async clickInputAlert(): Promise<void> {
+  async clickButtonAlert(): Promise<void> {
     await clickElement(this.buttonAlert);
+  }
+
+  async clickButtonPromptAlert(): Promise<void> {
+    await clickElement(this.buttonPromptAlert);
   }
 
   /**
@@ -57,8 +63,15 @@ export class AnkietaPage {
    */
   private registerAlertHandler(): void {
     this.page.once('dialog', async (dialog) => {
+      await this.verifyAlert(dialog);
       await this.verifyAlertText(dialog);
       await this.acceptAlert(dialog);
+    });
+  }
+  private registerPromptAlertHandler(): void {
+    this.page.once('dialog', async (dialog) => {
+      await this.verifyPromptAlert(dialog);
+      await this.acceptPromptAlert(dialog, 'maciej');
     });
   }
 
@@ -66,8 +79,15 @@ export class AnkietaPage {
    * Verifies that the dialog is of type 'alert' and contains the expected message.
    * @param dialog The Dialog object triggered by the browser.
    */
-  private async verifyAlertText(dialog: Dialog): Promise<void> {
+  private async verifyAlert(dialog: Dialog): Promise<void> {
     expect(dialog.type()).toBe('alert');
+  }
+
+  private async verifyPromptAlert(dialog: Dialog): Promise<void> {
+    expect(dialog.type()).toBe('prompt');
+  }
+
+  private async verifyAlertText(dialog: Dialog): Promise<void> {
     expect(dialog.message()).toContain('To jest okno „Allert” strony www.selenium-shop.pl');
   }
 
@@ -77,6 +97,10 @@ export class AnkietaPage {
    */
   private async acceptAlert(dialog: Dialog): Promise<void> {
     await dialog.accept();
+  }
+
+  private async acceptPromptAlert(dialog: Dialog, text: string): Promise<void> {
+    await dialog.accept(text);
   }
 
   /**
@@ -89,8 +113,20 @@ export class AnkietaPage {
   async isAlertHandledCorrectly(): Promise<boolean> {
     try {
       this.registerAlertHandler();
-      await this.clickInputAlert();
+      await this.clickButtonAlert();
       await expect(this.buttonAlert).toBeVisible();
+      return true;
+    } catch (error) {
+      console.error('Alert handling failed:', error);
+      return false;
+    }
+  }
+
+  async isPromptAlertHandledCorrectly(): Promise<boolean> {
+    try {
+      this.registerPromptAlertHandler();
+      await this.clickButtonPromptAlert();
+      await expect(this.buttonPromptAlert).toBeVisible();
       return true;
     } catch (error) {
       console.error('Alert handling failed:', error);
