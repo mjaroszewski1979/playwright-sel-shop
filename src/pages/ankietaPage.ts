@@ -16,6 +16,8 @@ export class AnkietaPage {
   readonly buttonConfirmAlert: Locator;
   readonly buttonProces: Locator;
   readonly spanProces: Locator;
+  readonly buttonRightClick: Locator;
+  readonly rightClickInfoPara: Locator;
 
   /**
    * Constructor for AnkietaPage.
@@ -30,6 +32,8 @@ export class AnkietaPage {
     this.buttonConfirmAlert = page.locator('#confimationAlertPrzycisk');
     this.buttonProces = page.locator('#proces');
     this.spanProces = page.locator('#procesText');
+    this.buttonRightClick = page.locator('#rightClick');
+    this.rightClickInfoPara = page.locator('#rightClickInfo');
   }
 
   /**
@@ -70,6 +74,11 @@ export class AnkietaPage {
 
   async clickButtonProces(): Promise<void> {
     await clickElement(this.buttonProces);
+  }
+
+  async clickButtonRightClick(): Promise<void> {
+    await this.buttonRightClick.hover();
+    await this.buttonRightClick.click({ button: 'right' });
   }
 
   /**
@@ -192,6 +201,20 @@ export class AnkietaPage {
       return procesCorrect;
     } catch (error) {
       console.error('Alert handling failed:', error);
+      return false;
+    }
+  }
+
+  async isRightClickInfoParaDisplayedProperly(): Promise<boolean> {
+    try {
+      this.clickButtonRightClick();
+      const infoParaCorrect = await isElementVisibleWithText(
+        this.rightClickInfoPara,
+        'Przycisk RIGHT został kliknięty'
+      );
+      return infoParaCorrect;
+    } catch (error) {
+      console.error('Right click button failed:', error);
       return false;
     }
   }
