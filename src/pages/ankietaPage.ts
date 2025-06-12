@@ -18,6 +18,8 @@ export class AnkietaPage {
   readonly spanProces: Locator;
   readonly buttonRightClick: Locator;
   readonly rightClickInfoPara: Locator;
+  readonly doubleClickInfoPara: Locator;
+  readonly buttonDoubleClick: Locator;
 
   /**
    * Constructor for AnkietaPage.
@@ -34,6 +36,10 @@ export class AnkietaPage {
     this.spanProces = page.locator('#procesText');
     this.buttonRightClick = page.locator('#rightClick');
     this.rightClickInfoPara = page.locator('#rightClickInfo');
+    this.doubleClickInfoPara = page.locator('#p-doubleClick');
+    this.buttonDoubleClick = page.locator('input[type="button"]', {
+      hasText: 'Dwuklik pokaż komunikat',
+    });
   }
 
   /**
@@ -74,6 +80,10 @@ export class AnkietaPage {
 
   async clickButtonProces(): Promise<void> {
     await clickElement(this.buttonProces);
+  }
+
+  async clickButtonDoubleClick(): Promise<void> {
+    await this.buttonDoubleClick.dblclick();
   }
 
   async clickButtonRightClick(): Promise<void> {
@@ -215,6 +225,20 @@ export class AnkietaPage {
       return infoParaCorrect;
     } catch (error) {
       console.error('Right click button failed:', error);
+      return false;
+    }
+  }
+
+  async isDoubleClickInfoParaDisplayedProperly(): Promise<boolean> {
+    try {
+      this.clickButtonDoubleClick();
+      const infoParaDBClickCorrect = await isElementVisibleWithText(
+        this.doubleClickInfoPara,
+        'Przycisk dwuklik został kliknięty'
+      );
+      return infoParaDBClickCorrect;
+    } catch (error) {
+      console.error('Double click button failed:', error);
       return false;
     }
   }

@@ -94,3 +94,13 @@ test('Verify right click info para is displayed properly and contain correct tex
 
   expect(await ankietaPage.isRightClickInfoParaDisplayedProperly()).toBe(true);
 });
+
+test('Verify double click info para is displayed properly and contain correct text', async ({
+  mainPage,
+  ankietaPage,
+}) => {
+  await mainPage.goto();
+  await mainPage.gotoAnkietaPage();
+
+  expect(await ankietaPage.isDoubleClickInfoParaDisplayedProperly()).toBe(true);
+});
