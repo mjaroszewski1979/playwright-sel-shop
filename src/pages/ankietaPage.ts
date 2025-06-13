@@ -20,6 +20,7 @@ export class AnkietaPage {
   readonly rightClickInfoPara: Locator;
   readonly doubleClickInfoPara: Locator;
   readonly buttonDoubleClick: Locator;
+  readonly buttonNewWindow: Locator;
 
   /**
    * Constructor for AnkietaPage.
@@ -39,6 +40,9 @@ export class AnkietaPage {
     this.doubleClickInfoPara = page.locator('#p-doubleClick');
     this.buttonDoubleClick = page.locator('input[type="button"]', {
       hasText: 'Dwuklik pokaż komunikat',
+    });
+    this.buttonNewWindow = page.locator('input[type="button"]', {
+      hasText: 'Otwórz nowe okno',
     });
   }
 
@@ -80,6 +84,10 @@ export class AnkietaPage {
 
   async clickButtonProces(): Promise<void> {
     await clickElement(this.buttonProces);
+  }
+
+  async clickButtonNewWindow(): Promise<void> {
+    await clickElement(this.buttonNewWindow);
   }
 
   async clickButtonDoubleClick(): Promise<void> {
@@ -239,6 +247,24 @@ export class AnkietaPage {
       return infoParaDBClickCorrect;
     } catch (error) {
       console.error('Double click button failed:', error);
+      return false;
+    }
+  }
+
+  async isNewWindowOpenedAfterClickNewWindowButton(): Promise<boolean> {
+    try {
+      const context = this.page.context();
+      const initialPagesCount = context.pages().length;
+      const [newPage] = await Promise.all([
+        context.waitForEvent('page'),
+        this.clickButtonNewWindow(),
+      ]);
+      await newPage.waitForLoadState();
+      const finalPagesCount = context.pages().length;
+      expect(finalPagesCount).toBe(initialPagesCount + 1);
+      return true;
+    } catch (error) {
+      console.error('New window click button failed:', error);
       return false;
     }
   }

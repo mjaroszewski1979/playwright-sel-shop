@@ -104,3 +104,10 @@ test('Verify double click info para is displayed properly and contain correct te
 
   expect(await ankietaPage.isDoubleClickInfoParaDisplayedProperly()).toBe(true);
 });
+
+test('Verify that clicking button opens a new window', async ({ mainPage, ankietaPage }) => {
+  await mainPage.goto();
+  await mainPage.gotoAnkietaPage();
+
+  expect(await ankietaPage.isNewWindowOpenedAfterClickNewWindowButton()).toBe(true);
+});
