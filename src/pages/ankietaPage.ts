@@ -165,6 +165,21 @@ export class AnkietaPage {
     await dialog.accept(text);
   }
 
+  async getNewPage(): Promise<Page | null> {
+    try {
+      const context = this.page.context();
+      const [newPage] = await Promise.all([
+        context.waitForEvent('page'),
+        this.clickButtonNewWindow(),
+      ]);
+      await newPage.waitForLoadState();
+      return newPage;
+    } catch (error) {
+      console.error('New window click button failed:', error);
+      return null;
+    }
+  }
+
   /**
    * Verifies that the alert is handled correctly by:
    *  - Registering the alert handler.

@@ -9,6 +9,7 @@ import { ZamowieniaPage } from './zamowieniaPage';
 import { SzczegolyKontaPage } from './szczegolyKontaPage';
 import { AdresyPage } from './adresyPage';
 import { PlikiDoPobraniaPage } from './plikiDoPobraniaPage';
+import { WartoPage } from './wartoPage';
 
 /**
  * Custom Playwright fixtures for Selenium Shop tests.
@@ -25,6 +26,7 @@ type MyFixtures = {
   szczegolyKontaPage: SzczegolyKontaPage;
   adresyPage: AdresyPage;
   plikiDoPobraniaPage: PlikiDoPobraniaPage;
+  wartoPage: WartoPage;
 };
 
 /**
@@ -60,6 +62,9 @@ export const test = base.extend<MyFixtures>({
   },
   plikiDoPobraniaPage: async ({ page }, use) => {
     await use(new PlikiDoPobraniaPage(page));
+  },
+  wartoPage: async ({ page }, use) => {
+    await use(new WartoPage(page));
   },
 });
 
