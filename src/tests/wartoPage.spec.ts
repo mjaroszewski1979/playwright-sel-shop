@@ -32,3 +32,15 @@ test('Verify Warto page URL', async ({ mainPage, ankietaPage }) => {
     expect(await wartoPage.verifyUserIsOnWartoPage()).toBe(true);
   }
 });
+
+test('Verify closing current window works correctly', async ({ mainPage, ankietaPage }) => {
+  await mainPage.goto();
+  await mainPage.gotoAnkietaPage();
+  await ankietaPage.clickButtonNewWindow();
+  const newPage = await ankietaPage.getNewPage();
+  expect(newPage).not.toBeNull();
+  if (newPage) {
+    const wartoPage = new WartoPage(newPage);
+    expect(await wartoPage.isWindowClosedAfterClickButton()).toBe(true);
+  }
+});

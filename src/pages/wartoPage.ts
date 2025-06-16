@@ -1,5 +1,6 @@
 import { Page, expect, Locator } from '@playwright/test';
 import { isUrlMatches } from '../utils/urlUtils';
+import { clickElement } from '../utils/actions';
 
 /**
  * Page Object Model for the "Koszyk" (Cart) page.
@@ -8,7 +9,8 @@ export class WartoPage {
   readonly page: Page;
 
   // Locators
-
+  readonly buttonCloseWindow: Locator;
+  readonly inputFirstLastName: Locator;
   /**
    * Constructor for WartoPage.
    * @param page - Playwright Page instance.
@@ -17,6 +19,10 @@ export class WartoPage {
     this.page = page;
 
     // Locators initialization
+    this.buttonCloseWindow = page.locator('input[type="button"]', {
+      hasText: 'Zamknij okno przeglądarki',
+    });
+    this.inputFirstLastName = page.locator('#imie_nazwisko');
   }
 
   /**
@@ -41,5 +47,28 @@ export class WartoPage {
       this.page,
       'http://www.selenium-shop.pl/warto-wykonywac-testy-automatyczne/'
     );
+  }
+
+  private async clickButtonCloseWindow(): Promise<void> {
+    await clickElement(this.buttonCloseWindow);
+  }
+
+  private async fillFirstLastNameInput(): Promise<void> {
+    await this.inputFirstLastName.fill('');
+    await this.inputFirstLastName.type('Jan Kowalski');
+    await this.clickButtonCloseWindow();
+  }
+
+  async isWindowClosedAfterClickButton(): Promise<boolean> {
+    try {
+      await this.fillFirstLastNameInput();
+      const context = this.page.context();
+      const expectedPagesCount = context.pages().length;
+      expect(expectedPagesCount).toBe(1);
+      return true;
+    } catch (error) {
+      console.error('Close window click button failed:', error);
+      return false;
+    }
   }
 }
