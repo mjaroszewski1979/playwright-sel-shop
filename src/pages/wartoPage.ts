@@ -36,7 +36,10 @@ export class WartoPage {
   /**
    * Verifies that the user is on the correct cart page URL.
    */
-  async verifyUserIsOnKoszykPage(): Promise<boolean> {
-    return await isUrlMatches(this.page, 'http://www.selenium-shop.pl/koszyk/');
+  async verifyUserIsOnWartoPage(): Promise<boolean> {
+    return await isUrlMatches(
+      this.page,
+      'http://www.selenium-shop.pl/warto-wykonywac-testy-automatyczne/'
+    );
   }
 }
