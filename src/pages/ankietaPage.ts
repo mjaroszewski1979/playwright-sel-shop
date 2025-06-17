@@ -21,6 +21,17 @@ export class AnkietaPage {
   readonly doubleClickInfoPara: Locator;
   readonly buttonDoubleClick: Locator;
   readonly buttonNewWindow: Locator;
+  readonly inputImie: Locator;
+  readonly inputNazwisko: Locator;
+  readonly inputRadioKobieta: Locator;
+  readonly inputRadioWiek: Locator;
+  readonly inputCheckboxProdukt: Locator;
+  readonly textareaKomentarz: Locator;
+  readonly selectSport: Locator;
+  readonly selectMarki: Locator;
+  readonly buttonWyslij: Locator;
+  readonly divDatepicker: Locator;
+  readonly divPokazInfo: Locator;
 
   /**
    * Constructor for AnkietaPage.
@@ -44,6 +55,19 @@ export class AnkietaPage {
     this.buttonNewWindow = page.locator('input[type="button"]', {
       hasText: 'Otwórz nowe okno',
     });
+    this.inputImie = page.locator('#Imię').first();
+    this.inputNazwisko = page.locator('#Nazwisk');
+    this.inputRadioKobieta = page.locator('input[type="radio"][value="Kobieta"]').first();
+    this.inputRadioWiek = page.locator('input[type="radio"][value="15-19"]').first();
+    this.inputCheckboxProdukt = page
+      .locator('input[type="checkbox"][value="Koszulka meczowa"]')
+      .first();
+    this.textareaKomentarz = page.locator('#Komentarz').first();
+    this.buttonWyslij = page.locator('#Wyslij');
+    this.selectSport = page.locator('select[name="Sport"]').first();
+    this.selectMarki = page.locator('#Marki').first();
+    this.divDatepicker = page.locator('#datepicker input.form-control.white');
+    this.divPokazInfo = page.locator('div#info');
   }
 
   /**
@@ -99,6 +123,28 @@ export class AnkietaPage {
     await this.buttonRightClick.click({ button: 'right' });
   }
 
+  async clickButtonWyslij(): Promise<void> {
+    await clickElement(this.buttonWyslij);
+  }
+
+  async selectSportKoszykowka(): Promise<void> {
+    await expect(this.selectSport).toBeVisible();
+    await this.selectSport.selectOption('koszykowka');
+  }
+
+  async selectMarkaAdidas(): Promise<void> {
+    await expect(this.selectMarki).toBeVisible();
+    await this.selectMarki.selectOption('adidas');
+  }
+
+  async inputPurchaseDate(): Promise<void> {
+    await this.divDatepicker.fill('10-06-2025');
+  }
+
+  async fillTextareaKomentarz(): Promise<void> {
+    await this.textareaKomentarz.fill('hala madrid!');
+  }
+
   /**
    * Registers a one-time alert (dialog) event handler.
    * When the alert appears, it verifies the alert's content and accepts it.
@@ -127,6 +173,21 @@ export class AnkietaPage {
       await this.verifyPromptAlert(dialog);
       await this.acceptPromptAlert(dialog, 'maciej');
     });
+  }
+
+  async fillAnkietaForm(): Promise<void> {
+    await this.inputImie.fill('');
+    await this.inputImie.fill('Maciej');
+    await this.inputNazwisko.fill('');
+    await this.inputNazwisko.fill('Jaroszewski');
+    await this.inputRadioKobieta.check();
+    await this.inputRadioWiek.check();
+    await this.inputCheckboxProdukt.check();
+    await this.selectSportKoszykowka();
+    await this.inputPurchaseDate();
+    await this.selectMarkaAdidas();
+    await this.fillTextareaKomentarz();
+    await this.clickButtonWyslij();
   }
 
   /**
@@ -280,6 +341,17 @@ export class AnkietaPage {
       return true;
     } catch (error) {
       console.error('New window click button failed:', error);
+      return false;
+    }
+  }
+
+  async isAnkietaFormWorksCorrectly(): Promise<boolean> {
+    try {
+      await this.fillAnkietaForm();
+      expect(this.divPokazInfo.isVisible);
+      return true;
+    } catch (error) {
+      console.error('Ankieta form is not working correctly', error);
       return false;
     }
   }

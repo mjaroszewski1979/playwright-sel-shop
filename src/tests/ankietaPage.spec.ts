@@ -189,3 +189,13 @@ test('Verify that clicking button opens a new window', async ({ mainPage, ankiet
 
   expect(await ankietaPage.isNewWindowOpenedAfterClickNewWindowButton()).toBe(true);
 });
+
+test('Verify that ankieta form is working correctly after submitting', async ({
+  mainPage,
+  ankietaPage,
+}) => {
+  await mainPage.goto();
+  await mainPage.gotoAnkietaPage();
+
+  expect(await ankietaPage.isAnkietaFormWorksCorrectly()).toBe(true);
+});
