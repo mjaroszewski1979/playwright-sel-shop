@@ -2,6 +2,7 @@ import { Page, Locator, Dialog, expect } from '@playwright/test';
 import { isUrlMatches } from '../utils/urlUtils';
 import { clickElement } from '../utils/actions';
 import { isElementVisibleWithText } from '../utils/assertions';
+import { testData } from '../utils/testData';
 
 /**
  * Page Object Model class for the "Ankieta" (Survey) page.
@@ -129,20 +130,20 @@ export class AnkietaPage {
 
   async selectSportKoszykowka(): Promise<void> {
     await expect(this.selectSport).toBeVisible();
-    await this.selectSport.selectOption('koszykowka');
+    await this.selectSport.selectOption(testData.sport);
   }
 
   async selectMarkaAdidas(): Promise<void> {
     await expect(this.selectMarki).toBeVisible();
-    await this.selectMarki.selectOption('adidas');
+    await this.selectMarki.selectOption(testData.marka);
   }
 
   async inputPurchaseDate(): Promise<void> {
-    await this.divDatepicker.fill('10-06-2025');
+    await this.divDatepicker.fill(testData.dataZakupu);
   }
 
   async fillTextareaKomentarz(): Promise<void> {
-    await this.textareaKomentarz.fill('hala madrid!');
+    await this.textareaKomentarz.fill(testData.komentarz);
   }
 
   /**
@@ -177,9 +178,9 @@ export class AnkietaPage {
 
   async fillAnkietaForm(): Promise<void> {
     await this.inputImie.fill('');
-    await this.inputImie.fill('Maciej');
+    await this.inputImie.fill(testData.imie);
     await this.inputNazwisko.fill('');
-    await this.inputNazwisko.fill('Jaroszewski');
+    await this.inputNazwisko.fill(testData.nazwisko);
     await this.inputRadioKobieta.check();
     await this.inputRadioWiek.check();
     await this.inputCheckboxProdukt.check();
