@@ -199,3 +199,13 @@ test('Verify that ankieta form is working correctly after submitting', async ({
 
   expect(await ankietaPage.isAnkietaFormWorksCorrectly()).toBe(true);
 });
+
+test('Verify that displayed data matches input after submitting ankieta form', async ({
+  mainPage,
+  ankietaPage,
+}) => {
+  await mainPage.goto();
+  await mainPage.gotoAnkietaPage();
+
+  expect(await ankietaPage.verifyDisplayedDataMatchesInput()).toBe(true);
+});

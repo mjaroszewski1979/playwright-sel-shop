@@ -33,6 +33,13 @@ export class AnkietaPage {
   readonly buttonWyslij: Locator;
   readonly divDatepicker: Locator;
   readonly divPokazInfo: Locator;
+  readonly divPokazInfoImie: Locator;
+  readonly divPokazInfoNazwisko: Locator;
+  readonly divPokazInfoProdukt: Locator;
+  readonly divPokazInfoSport: Locator;
+  readonly divPokazInfoMarka: Locator;
+  readonly divPokazInfoDataZakupu: Locator;
+  readonly divPokazInfoKomentarz: Locator;
 
   /**
    * Constructor for AnkietaPage.
@@ -69,6 +76,21 @@ export class AnkietaPage {
     this.selectMarki = page.locator('#Marki').first();
     this.divDatepicker = page.locator('#datepicker input.form-control.white');
     this.divPokazInfo = page.locator('div#info');
+    this.divPokazInfoImie = page.locator('div#info', { hasText: `Nazwisko : ${testData.imie}` });
+    this.divPokazInfoNazwisko = page.locator('div#info', {
+      hasText: `Nazwisko : ${testData.nazwisko}`,
+    });
+    this.divPokazInfoProdukt = page.locator('div#info', {
+      hasText: `Nazwisko : ${testData.produkt}`,
+    });
+    this.divPokazInfoSport = page.locator('div#info', { hasText: `Nazwisko : ${testData.sport}` });
+    this.divPokazInfoMarka = page.locator('div#info', { hasText: `Nazwisko : ${testData.marka}` });
+    this.divPokazInfoDataZakupu = page.locator('div#info', {
+      hasText: `Nazwisko : ${testData.dataZakupu}`,
+    });
+    this.divPokazInfoKomentarz = page.locator('div#info', {
+      hasText: `Nazwisko : ${testData.komentarz}`,
+    });
   }
 
   /**
@@ -350,6 +372,25 @@ export class AnkietaPage {
     try {
       await this.fillAnkietaForm();
       expect(this.divPokazInfo.isVisible);
+      return true;
+    } catch (error) {
+      console.error('Ankieta form is not working correctly', error);
+      return false;
+    }
+  }
+
+  async verifyDisplayedDataMatchesInput(): Promise<boolean> {
+    try {
+      await this.fillAnkietaForm();
+      expect(
+        this.divPokazInfoImie.isVisible &&
+          this.divPokazInfoNazwisko.isVisible &&
+          this.divPokazInfoProdukt.isVisible &&
+          this.divPokazInfoSport.isVisible &&
+          this.divPokazInfoMarka.isVisible &&
+          this.divPokazInfoDataZakupu.isVisible &&
+          this.divPokazInfoKomentarz.isVisible
+      );
       return true;
     } catch (error) {
       console.error('Ankieta form is not working correctly', error);
