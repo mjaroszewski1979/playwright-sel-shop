@@ -38,7 +38,8 @@ export class AnkietaPage {
   readonly divPokazInfoProdukt: Locator;
   readonly divPokazInfoSport: Locator;
   readonly divPokazInfoMarka: Locator;
-  readonly divPokazInfoDataZakupu: Locator;
+  readonly divPokazInfoDataPlec: Locator;
+  readonly divPokazInfoDataWiek: Locator;
   readonly divPokazInfoKomentarz: Locator;
 
   /**
@@ -76,20 +77,24 @@ export class AnkietaPage {
     this.selectMarki = page.locator('#Marki').first();
     this.divDatepicker = page.locator('#datepicker input.form-control.white');
     this.divPokazInfo = page.locator('div#info');
-    this.divPokazInfoImie = page.locator('div#info', { hasText: `Nazwisko : ${testData.imie}` });
+    this.divPokazInfoImie = page.locator('div#info', { hasText: `Imie: ${testData.imie}` });
     this.divPokazInfoNazwisko = page.locator('div#info', {
-      hasText: `Nazwisko : ${testData.nazwisko}`,
+      hasText: `Nazwisko: ${testData.nazwisko}`,
+    });
+    this.divPokazInfoDataPlec = page.locator('div#info', {
+      hasText: `Płeć: ${testData.plec}`,
+    });
+    this.divPokazInfoDataWiek = page.locator('div#info', {
+      hasText: `Wiek: ${testData.wiek}`,
     });
     this.divPokazInfoProdukt = page.locator('div#info', {
-      hasText: `Nazwisko : ${testData.produkt}`,
+      hasText: `Produkty jakie szukasz: ${testData.produkt}`,
     });
-    this.divPokazInfoSport = page.locator('div#info', { hasText: `Nazwisko : ${testData.sport}` });
-    this.divPokazInfoMarka = page.locator('div#info', { hasText: `Nazwisko : ${testData.marka}` });
-    this.divPokazInfoDataZakupu = page.locator('div#info', {
-      hasText: `Nazwisko : ${testData.dataZakupu}`,
-    });
+    this.divPokazInfoSport = page.locator('div#info', { hasText: `Sport: ${testData.sport}` });
+    this.divPokazInfoMarka = page.locator('div#info', { hasText: `Marki: ${testData.marka}` });
+
     this.divPokazInfoKomentarz = page.locator('div#info', {
-      hasText: `Nazwisko : ${testData.komentarz}`,
+      hasText: `Komentarz: ${testData.komentarz}`,
     });
   }
 
@@ -168,6 +173,14 @@ export class AnkietaPage {
     await this.textareaKomentarz.fill(testData.komentarz);
   }
 
+  getInputRadioWiek(wiek: string): Locator {
+    return this.page.locator(`input[type="radio"][value="${wiek}"]`).first();
+  }
+
+  getInputRadioPlec(plec: string): Locator {
+    return this.page.locator(`input[type="radio"][value="${plec}"]`).first();
+  }
+
   /**
    * Registers a one-time alert (dialog) event handler.
    * When the alert appears, it verifies the alert's content and accepts it.
@@ -203,8 +216,8 @@ export class AnkietaPage {
     await this.inputImie.fill(testData.imie);
     await this.inputNazwisko.fill('');
     await this.inputNazwisko.fill(testData.nazwisko);
-    await this.inputRadioKobieta.check();
-    await this.inputRadioWiek.check();
+    await this.getInputRadioPlec(testData.plec).check();
+    await this.getInputRadioWiek(testData.wiek).check();
     await this.inputCheckboxProdukt.check();
     await this.selectSportKoszykowka();
     await this.inputPurchaseDate();
@@ -385,10 +398,11 @@ export class AnkietaPage {
       expect(
         this.divPokazInfoImie.isVisible &&
           this.divPokazInfoNazwisko.isVisible &&
+          this.divPokazInfoDataPlec.isVisible &&
+          this.divPokazInfoDataWiek.isVisible &&
           this.divPokazInfoProdukt.isVisible &&
           this.divPokazInfoSport.isVisible &&
           this.divPokazInfoMarka.isVisible &&
-          this.divPokazInfoDataZakupu.isVisible &&
           this.divPokazInfoKomentarz.isVisible
       );
       return true;
