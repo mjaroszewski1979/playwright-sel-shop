@@ -126,57 +126,100 @@ export class AnkietaPage {
     await clickElement(this.buttonAlert);
   }
 
+  /**
+   * Clicks the prompt alert button to trigger a prompt dialog in the browser.
+   */
   async clickButtonPromptAlert(): Promise<void> {
     await clickElement(this.buttonPromptAlert);
   }
 
+  /**
+   * Clicks the confirm alert button to trigger a confirmation dialog in the browser.
+   */
   async clickButtonConfirmAlert(): Promise<void> {
     await clickElement(this.buttonConfirmAlert);
   }
 
+  /**
+   * Clicks the "Proces" button to trigger process-related behavior or UI update.
+   */
   async clickButtonProces(): Promise<void> {
     await clickElement(this.buttonProces);
   }
 
+  /**
+   * Clicks the "New Window" button to open a new browser window.
+   */
   async clickButtonNewWindow(): Promise<void> {
     await clickElement(this.buttonNewWindow);
   }
 
+  /**
+   * Double-clicks the designated button to trigger a double-click action.
+   */
   async clickButtonDoubleClick(): Promise<void> {
     await this.buttonDoubleClick.dblclick();
   }
 
+  /**
+   * Right-clicks on the target button element to trigger context menu behavior.
+   */
   async clickButtonRightClick(): Promise<void> {
     await this.buttonRightClick.hover();
     await this.buttonRightClick.click({ button: 'right' });
   }
 
+  /**
+   * Clicks the "Wyślij" button to submit the survey form.
+   */
   async clickButtonWyslij(): Promise<void> {
     await clickElement(this.buttonWyslij);
   }
 
-  async selectSportKoszykowka(): Promise<void> {
+  /**
+   * Selects the predefined sport value from the dropdown based on test data.
+   */
+  async selectSports(): Promise<void> {
     await expect(this.selectSport).toBeVisible();
     await this.selectSport.selectOption(testData.sport);
   }
 
-  async selectMarkaAdidas(): Promise<void> {
+  /**
+   * Selects the predefined brand value from the dropdown based on test data.
+   */
+  async selectMarka(): Promise<void> {
     await expect(this.selectMarki).toBeVisible();
     await this.selectMarki.selectOption(testData.marka);
   }
 
+  /**
+   * Fills in the purchase date input using the predefined test data value.
+   */
   async inputPurchaseDate(): Promise<void> {
     await this.divDatepicker.fill(testData.dataZakupu);
   }
 
+  /**
+   * Fills in the "Komentarz" (comment) textarea with predefined test data.
+   */
   async fillTextareaKomentarz(): Promise<void> {
     await this.textareaKomentarz.fill(testData.komentarz);
   }
 
+  /**
+   * Returns a dynamic radio button locator for the "Wiek" (age) group.
+   * @param wiek - The value of the age group to select.
+   * @returns Locator for the age radio input.
+   */
   getInputRadioWiek(wiek: string): Locator {
     return this.page.locator(`input[type="radio"][value="${wiek}"]`).first();
   }
 
+  /**
+   * Returns a dynamic radio button locator for the "Płeć" (gender) group.
+   * @param plec - The value of the gender option to select.
+   * @returns Locator for the gender radio input.
+   */
   getInputRadioPlec(plec: string): Locator {
     return this.page.locator(`input[type="radio"][value="${plec}"]`).first();
   }
@@ -185,7 +228,6 @@ export class AnkietaPage {
    * Registers a one-time alert (dialog) event handler.
    * When the alert appears, it verifies the alert's content and accepts it.
    */
-
   private registerAlertHandler(): void {
     this.page.once('dialog', async (dialog) => {
       await this.verifyAlert(dialog);
@@ -194,6 +236,10 @@ export class AnkietaPage {
     });
   }
 
+  /**
+   * Registers a one-time handler for confirm alert.
+   * When the alert appears, it confirms the alert's content and accepts it.
+   */
   private registerConfirmAlertHandler(): void {
     this.page.once('dialog', async (dialog) => {
       await this.verifyConfirmAlert(dialog);
@@ -204,6 +250,11 @@ export class AnkietaPage {
       await this.dismissAlert(dialog);
     });
   }
+
+  /**
+   * Registers a one-time handler for prompt alert.
+   * Fills the prompt with a predefined string before accepting it.
+   */
   private registerPromptAlertHandler(): void {
     this.page.once('dialog', async (dialog) => {
       await this.verifyPromptAlert(dialog);
@@ -211,6 +262,10 @@ export class AnkietaPage {
     });
   }
 
+  /**
+   * Fills in all required fields in the Ankieta form using test data
+   * and submits the form by clicking the "Wyślij" button.
+   */
   async fillAnkietaForm(): Promise<void> {
     await this.inputImie.fill('');
     await this.inputImie.fill(testData.imie);
@@ -219,9 +274,9 @@ export class AnkietaPage {
     await this.getInputRadioPlec(testData.plec).check();
     await this.getInputRadioWiek(testData.wiek).check();
     await this.inputCheckboxProdukt.check();
-    await this.selectSportKoszykowka();
+    await this.selectSports();
     await this.inputPurchaseDate();
-    await this.selectMarkaAdidas();
+    await this.selectMarka();
     await this.fillTextareaKomentarz();
     await this.clickButtonWyslij();
   }
@@ -234,14 +289,30 @@ export class AnkietaPage {
     expect(dialog.type()).toBe('alert');
   }
 
+  /**
+   * Verifies that the received dialog is of type 'prompt'.
+   * Used to validate that a prompt alert was triggered as expected.
+   * @param dialog The dialog instance triggered by the browser.
+   */
   private async verifyPromptAlert(dialog: Dialog): Promise<void> {
     expect(dialog.type()).toBe('prompt');
   }
 
+  /**
+   * Verifies that the received dialog is of type 'confirm'.
+   * Used to validate that a confirm alert was triggered as expected.
+   * @param dialog The dialog instance triggered by the browser.
+   */
   private async verifyConfirmAlert(dialog: Dialog): Promise<void> {
     expect(dialog.type()).toBe('confirm');
   }
 
+  /**
+   * Verifies that the alert dialog's message contains the expected text.
+   * Useful for checking correctness of alert content.
+   * @param dialog The dialog instance triggered by the browser.
+   * @param text The expected substring to be found in the dialog message.
+   */
   private async verifyAlertText(dialog: Dialog, text: string): Promise<void> {
     expect(dialog.message()).toContain(text);
   }
@@ -254,14 +325,27 @@ export class AnkietaPage {
     await dialog.accept();
   }
 
+  /**
+   * Dismisses (closes) the confirmation dialog by clicking the "Cancel" button.
+   * @param dialog The Dialog object to be dismissed.
+   */
   private async dismissAlert(dialog: Dialog): Promise<void> {
     await dialog.dismiss();
   }
 
+  /**
+   * Accepts a prompt alert and fills it with the specified input value.
+   * @param dialog The Dialog object to be accepted.
+   * @param text The input string to send to the prompt.
+   */
   private async acceptPromptAlert(dialog: Dialog, text: string): Promise<void> {
     await dialog.accept(text);
   }
 
+  /**
+   * Waits for and returns a new browser page that opens after triggering an action.
+   * @returns The newly opened Page instance or null if opening failed.
+   */
   async getNewPage(): Promise<Page | null> {
     try {
       const context = this.page.context();
@@ -296,6 +380,13 @@ export class AnkietaPage {
     }
   }
 
+  /**
+   * Verifies that the prompt alert is handled correctly by:
+   *  - Registering the prompt alert handler.
+   *  - Triggering the prompt alert via button click.
+   *  - Asserting that the button remains visible after handling.
+   * @returns True if prompt alert is handled successfully, otherwise false.
+   */
   async isPromptAlertHandledCorrectly(): Promise<boolean> {
     try {
       this.registerPromptAlertHandler();
@@ -308,6 +399,13 @@ export class AnkietaPage {
     }
   }
 
+  /**
+   * Verifies that the confirm alert is handled correctly by:
+   *  - Registering the confirm alert handler.
+   *  - Triggering the confirm alert via button click.
+   *  - Asserting that the button remains visible after handling.
+   * @returns True if confirm alert is handled successfully, otherwise false.
+   */
   async isConfirmAlertHandledCorrectly(): Promise<boolean> {
     try {
       this.registerConfirmAlertHandler();
@@ -320,6 +418,13 @@ export class AnkietaPage {
     }
   }
 
+  /**
+   * Verifies that the "Proces" element is displayed correctly after:
+   *  - Clicking the "Proces" button.
+   *  - Handling the confirmation alert.
+   *  - Checking visibility and content of the related span.
+   * @returns True if the element is displayed properly, otherwise false.
+   */
   async isProcesElementDisplayedProperly(): Promise<boolean> {
     try {
       this.clickButtonProces();
@@ -335,6 +440,11 @@ export class AnkietaPage {
     }
   }
 
+  /**
+   * Verifies that the paragraph for right-click information is displayed properly
+   * after performing a right-click on the associated button.
+   * @returns True if the information paragraph is displayed as expected, otherwise false.
+   */
   async isRightClickInfoParaDisplayedProperly(): Promise<boolean> {
     try {
       this.clickButtonRightClick();
@@ -349,6 +459,11 @@ export class AnkietaPage {
     }
   }
 
+  /**
+   * Verifies that the paragraph for double-click information is displayed properly
+   * after performing a double-click on the associated button.
+   * @returns True if the information paragraph is displayed as expected, otherwise false.
+   */
   async isDoubleClickInfoParaDisplayedProperly(): Promise<boolean> {
     try {
       this.clickButtonDoubleClick();
@@ -363,6 +478,11 @@ export class AnkietaPage {
     }
   }
 
+  /**
+   * Verifies that a new browser window is opened after clicking the appropriate button.
+   * Compares the number of open pages before and after the action.
+   * @returns True if a new window opens correctly, otherwise false.
+   */
   async isNewWindowOpenedAfterClickNewWindowButton(): Promise<boolean> {
     try {
       const context = this.page.context();
@@ -381,6 +501,11 @@ export class AnkietaPage {
     }
   }
 
+  /**
+   * Verifies that the full Ankieta (survey) form can be filled and submitted
+   * without errors and the confirmation section is displayed.
+   * @returns True if the form submits successfully, otherwise false.
+   */
   async isAnkietaFormWorksCorrectly(): Promise<boolean> {
     try {
       await this.fillAnkietaForm();
@@ -392,6 +517,11 @@ export class AnkietaPage {
     }
   }
 
+  /**
+   * Verifies that the information displayed after submitting the form
+   * matches the values provided during form input.
+   * @returns True if displayed data matches input data, otherwise false.
+   */
   async verifyDisplayedDataMatchesInput(): Promise<boolean> {
     try {
       await this.fillAnkietaForm();
