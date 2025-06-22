@@ -24,8 +24,6 @@ export class AnkietaPage {
   readonly buttonNewWindow: Locator;
   readonly inputImie: Locator;
   readonly inputNazwisko: Locator;
-  readonly inputRadioKobieta: Locator;
-  readonly inputRadioWiek: Locator;
   readonly inputCheckboxProdukt: Locator;
   readonly textareaKomentarz: Locator;
   readonly selectSport: Locator;
@@ -66,8 +64,6 @@ export class AnkietaPage {
     });
     this.inputImie = page.locator('#Imię').first();
     this.inputNazwisko = page.locator('#Nazwisk');
-    this.inputRadioKobieta = page.locator('input[type="radio"][value="Kobieta"]').first();
-    this.inputRadioWiek = page.locator('input[type="radio"][value="15-19"]').first();
     this.inputCheckboxProdukt = page
       .locator('input[type="checkbox"][value="Koszulka meczowa"]')
       .first();
