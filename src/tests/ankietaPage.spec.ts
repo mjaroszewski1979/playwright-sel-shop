@@ -190,6 +190,19 @@ test('Verify that clicking button opens a new window', async ({ mainPage, ankiet
   expect(await ankietaPage.isNewWindowOpenedAfterClickNewWindowButton()).toBe(true);
 });
 
+/**
+ * Test to verify that the survey form ("Ankieta") functions correctly after submitting.
+ *
+ * Steps:
+ * 1. Navigate to the home page.
+ * 2. Go to the "Survey" page.
+ * 3. Fill out the form with valid input data.
+ * 4. Submit the form.
+ * 5. Assert that the form is processed correctly and confirmation is displayed.
+ *
+ * Expected Result:
+ * The form should be submitted successfully and a confirmation or response should appear on the page.
+ */
 test('Verify that ankieta form is working correctly after submitting', async ({
   mainPage,
   ankietaPage,
@@ -200,6 +213,19 @@ test('Verify that ankieta form is working correctly after submitting', async ({
   expect(await ankietaPage.isAnkietaFormWorksCorrectly()).toBe(true);
 });
 
+/**
+ * Test to verify that the data displayed after submitting the survey form matches the input provided.
+ *
+ * Steps:
+ * 1. Navigate to the home page.
+ * 2. Go to the "Survey" page.
+ * 3. Fill out the form with known data.
+ * 4. Submit the form.
+ * 5. Assert that all displayed data fields match the originally entered input.
+ *
+ * Expected Result:
+ * Each piece of user input should be correctly displayed in the appropriate section after submission.
+ */
 test('Verify that displayed data matches input after submitting ankieta form', async ({
   mainPage,
   ankietaPage,
