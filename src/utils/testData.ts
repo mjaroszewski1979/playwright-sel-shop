@@ -1,5 +1,26 @@
 import { faker } from '@faker-js/faker';
 
+/**
+ * Generates randomized test data for the "Ankieta" (Survey) form using the Faker library.
+ *
+ * This function returns a consistent object structure with dynamically generated values
+ * to simulate real-world user input across various form fields. The purpose is to provide
+ * varied and realistic test input data for automated test scenarios.
+ *
+ * Field breakdown:
+ * - imie: Random female first name.
+ * - nazwisko: Random last name.
+ * - plec: Randomly selected gender ("Kobieta" or "Mężczyzna").
+ * - wiek: Randomly selected age range from predefined categories.
+ * - produkt: Random product name selected from a predefined list.
+ * - sport: Random sport name selected from common options.
+ * - marka: Random brand name selected from well-known sports brands.
+ * - komentarz: Randomly generated sentence to simulate a comment field.
+ * - dataZakupu: Random future date (within one year), formatted as 'dd-mm-yyyy'.
+ *
+ * The function is immediately executed to export a single `testData` object
+ * that can be used directly in test cases.
+ */
 const generateAnkietaData = () => ({
   imie: faker.person.firstName('female'),
   nazwisko: faker.person.lastName(),
