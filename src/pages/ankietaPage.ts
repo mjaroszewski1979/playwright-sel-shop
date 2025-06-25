@@ -24,7 +24,6 @@ export class AnkietaPage {
   readonly buttonNewWindow: Locator;
   readonly inputImie: Locator;
   readonly inputNazwisko: Locator;
-  readonly inputCheckboxProdukt: Locator;
   readonly textareaKomentarz: Locator;
   readonly selectSport: Locator;
   readonly selectMarki: Locator;
@@ -64,9 +63,6 @@ export class AnkietaPage {
     });
     this.inputImie = page.locator('#Imię').first();
     this.inputNazwisko = page.locator('#Nazwisk');
-    this.inputCheckboxProdukt = page
-      .locator('input[type="checkbox"][value="Koszulka meczowa"]')
-      .first();
     this.textareaKomentarz = page.locator('#Komentarz').first();
     this.buttonWyslij = page.locator('#Wyslij');
     this.selectSport = page.locator('select[name="Sport"]').first();
@@ -221,6 +217,19 @@ export class AnkietaPage {
   }
 
   /**
+   * Returns a Locator for the checkbox input element corresponding to the given product value.
+   *
+   * This method is useful for interacting with product-specific checkboxes in the survey form.
+   * It searches for the first checkbox input whose "value" attribute matches the provided product name.
+   *
+   * @param produkt - The product name used to identify the checkbox (e.g., "Koszulka meczowa").
+   * @returns A Playwright Locator pointing to the matched checkbox element.
+   */
+  getInputCheckboxProdukt(produkt: string): Locator {
+    return this.page.locator(`input[type="checkbox"][value="${produkt}"]`).first();
+  }
+
+  /**
    * Registers a one-time alert (dialog) event handler.
    * When the alert appears, it verifies the alert's content and accepts it.
    */
@@ -254,7 +263,7 @@ export class AnkietaPage {
   private registerPromptAlertHandler(): void {
     this.page.once('dialog', async (dialog) => {
       await this.verifyPromptAlert(dialog);
-      await this.acceptPromptAlert(dialog, 'maciej');
+      await this.acceptPromptAlert(dialog, testData.komentarz);
     });
   }
 
@@ -269,7 +278,7 @@ export class AnkietaPage {
     await this.inputNazwisko.fill(testData.nazwisko);
     await this.getInputRadioPlec(testData.plec).check();
     await this.getInputRadioWiek(testData.wiek).check();
-    await this.inputCheckboxProdukt.check();
+    await this.getInputCheckboxProdukt(testData.produkt).check();
     await this.selectSports();
     await this.inputPurchaseDate();
     await this.selectMarka();
