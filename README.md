@@ -9,6 +9,10 @@
 ## Features
 * E2E Testing: Validates critical user flows such as login, product selection, cart operations, and checkout.
 * Page Object Model: Organizes selectors and test logic into reusable, modular components.
+* Dynamic Test Data Generation: Utilizes Faker to programmatically generate user names, dates, and other form input values to ensure test variability.
+* Centralized Utility Layer: Shared actions (e.g. button clicks, URL checks) are abstracted into the utils folder to reduce code duplication.
+* Playwright Test Discovery Integration: Run individual tests directly from the VS Code interface using the built-in "play" icon.
+* Logical Grouping of Elements: Each page file follows a clear structure with dedicated sections for locators, class variables, and methods to enhance code readability.
 * GitHub Codespace Support: Enables instant development and testing setup in a cloud-based VS Code environment.
 * Test Reporting: Integrated Playwright test reporting for quick feedback and visibility.
 
